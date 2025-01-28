@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["ES7"],
+    "declaration": true,
+    "esModuleInterop": false,
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ES2017",
+    "sourceMap": true,
+    "outDir": "lib",
+    "baseUrl": "./",
+    "allowJs": false,
+    "paths": {
+      "@src/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "noUnusedLocals": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "cmc-api",
+  "version": "0.0.1",
+  "description": "CoinMarketCap RESTful API Wrapper",
+  "keywords": [
+    "coinmarketcap",
+    "coinmarketcap-api",
+    "coinmarketcap-client",
+    "coinmarketcap-js",
+    "coinmarketcap-scraper"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Fiki Pratama",
+    "url": "https://github.com/nsmle"
+  },
+  "bugs": {
+    "url": "https://github.com/nsmle/cmc-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nsmle/cmc-api.git"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/nsmle"
+  },
+  "scripts": {
+    "start": "node lib/index",
+    "start:dev": "yarn build && yarn start",
+    "build": "yarn lint:build && tsc -p tsconfig.build.json",
+    "lint": "eslint",
+    "lint:build": "eslint --global build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.10",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jiti": "^2.4.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
+  },
+  "dependencies": {}
+}
