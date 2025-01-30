@@ -8,12 +8,15 @@ const crypto = {
   metadata: "/v2/cryptocurrency/info",
   // Latest listings
   listings: "/v1/cryptocurrency/listings/latest",
+  // New listings
+  listingsNew: "/v1/cryptocurrency/listings/new",
   //  Historical listings
   listingsHistorical: "/v1/cryptocurrency/listings/historical",
   // Latest quotes
   quotes: "/v2/cryptocurrency/quotes/latest",
   // Historical quotes
   quotesHistorical: "/v2/cryptocurrency/quotes/historical",
+  quotesHistoricalV3: "/v3/cryptocurrency/quotes/historical",
   // Latest market pairs
   marketPairs: "/v2/cryptocurrency/market-pairs/latest",
   // Latest OHLCV

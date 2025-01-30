@@ -15,4 +15,12 @@ export class CoinMarketCapApi {
   public metric = new MetricRepository(this);
   public community = new CommunityRepository(this);
   public misc = new MiscRepository(this);
+
+  constructor(apikey?: string) {
+    if (apikey) this.client.setApiKey(apikey);
+  }
+
+  public setApiKey(apiKey: string): void {
+    this.client.setApiKey(apiKey);
+  }
 }
