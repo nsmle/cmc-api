@@ -3,8 +3,8 @@
     "lib": ["ES7"],
     "declaration": true,
     "esModuleInterop": false,
-    "module": "Node16",
-    "moduleResolution": "node16",
+    "module": "CommonJS",
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,
@@ -17,7 +17,12 @@
     "baseUrl": "./",
     "allowJs": false,
     "paths": {
-      "@src/*": ["src/*"]
+      "@core/*": ["src/core/*"],
+      "@response/*": ["src/responses/*"],
+      "@repository/*": ["src/repositories/*"],
+      "@option/*": ["src/types/*"],
+      "@error/*": ["src/errors/*"],
+      "@cmc/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "noUnusedLocals": true

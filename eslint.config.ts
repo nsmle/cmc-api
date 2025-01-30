@@ -1,6 +1,6 @@
 import eslint from "@eslint/js";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
+// import tsParser from "@typescript-eslint/parser";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
@@ -35,7 +35,7 @@ export default tsEslint.config(
           tabWidth: 2,
           singleQuote: false,
           trailingComma: "all",
-          printWidth: 80,
+          printWidth: 120,
           endOfLine: "crlf",
           bracketSpacing: true,
           quoteProps: "consistent",
@@ -48,7 +48,7 @@ export default tsEslint.config(
   {
     files: ["src/**/*.{ts,tsx,cts,mts,js,cjs,mjs}"],
     languageOptions: {
-      parser: tsParser,
+      // parser: tsParser,
       parserOptions: {
         tsconfigRootDir: "./",
         project: tsConfig,

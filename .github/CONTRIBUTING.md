@@ -8,6 +8,6 @@ Contributions are welcome. All changes must be submitted via pull request.
 - Use Carriage Return + Line Feed characters line endings (CRLF).
 - Add tests (when it's possible).
 - Use double quote instead of single quote.
-- Print width max 80.
+- Print width max 120.
 
 All guidelines, see [eslint.config.mjs](https://github.com/nsmle/cmc-api/blob/main/eslint.config.mjs)
