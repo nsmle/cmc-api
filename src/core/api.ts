@@ -7,7 +7,7 @@ import { MetricRepository } from "@repository/metric.repository";
 import { MiscRepository } from "@repository/misc.repository";
 
 export class CoinMarketCapApi {
-  public client = new Client(this);
+  public client = new Client();
 
   public crypto = new CryptoRepository(this);
   public dex = new DexRepository(this);
