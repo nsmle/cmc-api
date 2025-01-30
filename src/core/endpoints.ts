@@ -20,9 +20,9 @@ const crypto = {
   // Latest market pairs
   marketPairs: "/v2/cryptocurrency/market-pairs/latest",
   // Latest OHLCV
-  ohlc: "/v2/cryptocurrency/ohlcv/latest",
+  ohlcv: "/v2/cryptocurrency/ohlcv/latest",
   // Historical OHLCV
-  ohlcHistorical: "/v2/cryptocurrency/ohlcv/historical",
+  ohlcvHistorical: "/v2/cryptocurrency/ohlcv/historical",
   // Price performance Stats
   performance: "/v2/cryptocurrency/price-performance-stats/latest",
   // Categories

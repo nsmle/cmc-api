@@ -1,68 +1,114 @@
 import endpoints from "@core/endpoints";
-import { describe, expect, test } from "@jest/globals";
+import { beforeAll, describe, expect, test } from "@jest/globals";
 
-describe("endpoints", (): void => {
-  test("crypto", (): void => {
-    expect(endpoints.crypto.map).toBe("/v1/cryptocurrency/map");
-    expect(endpoints.crypto.metadata).toBe("/v2/cryptocurrency/info");
-    expect(endpoints.crypto.listings).toBe("/v1/cryptocurrency/listings/latest");
-    expect(endpoints.crypto.listingsHistorical).toBe("/v1/cryptocurrency/listings/historical");
-    expect(endpoints.crypto.quotes).toBe("/v2/cryptocurrency/quotes/latest");
-    expect(endpoints.crypto.quotesHistorical).toBe("/v2/cryptocurrency/quotes/historical");
-    expect(endpoints.crypto.marketPairs).toBe("/v2/cryptocurrency/market-pairs/latest");
-    expect(endpoints.crypto.ohlc).toBe("/v2/cryptocurrency/ohlcv/latest");
-    expect(endpoints.crypto.ohlcHistorical).toBe("/v2/cryptocurrency/ohlcv/historical");
-    expect(endpoints.crypto.performance).toBe("/v2/cryptocurrency/price-performance-stats/latest");
-    expect(endpoints.crypto.categories).toBe("/v1/cryptocurrency/categories");
-    expect(endpoints.crypto.category).toBe("/v1/cryptocurrency/category");
-    expect(endpoints.crypto.airdrops).toBe("/v1/cryptocurrency/airdrops");
-    expect(endpoints.crypto.airdrop).toBe("/v1/cryptocurrency/airdrop");
-    expect(endpoints.crypto.trending).toBe("/v1/cryptocurrency/trending/latest");
-    expect(endpoints.crypto.mostVisited).toBe("/v1/cryptocurrency/trending/most-visited");
-    expect(endpoints.crypto.gainersLosers).toBe("/v1/cryptocurrency/trending/gainers-losers");
+// eslint-disable-next-line
+const getEndpoint = (postmanItems: any[], name: string, key: string): string => {
+  // eslint-disable-next-line
+  function search(items: any[]): string {
+    for (const item of items) {
+      if (item.name === name && item.request && item?.request?.url?.path?.includes(key))
+        return [""].concat(item.request.url.path ?? [])?.join("/");
+      if (item.item) {
+        const result = search(item.item);
+        if (result) return result;
+      }
+    }
+    return "";
+  }
+
+  return search(postmanItems);
+};
+
+describe("Endpoints", (): void => {
+  // eslint-disable-next-line
+  let item: any[] = [];
+
+  beforeAll(async (): Promise<void> => {
+    const postman = await fetch("https://pro-api.coinmarketcap.com/v1/tools/postman").then(
+      (res): Promise<any> => res.json(), // eslint-disable-line @typescript-eslint/no-explicit-any
+    );
+    item = postman.item;
   });
 
-  test("dex", (): void => {
-    expect(endpoints.dex.listings).toBe("/v4/dex/listings/quotes");
-    expect(endpoints.dex.metadata).toBe("/v4/dex/listings/info");
-    expect(endpoints.dex.networks).toBe("/v4/dex/networks/list");
-    expect(endpoints.dex.pairs).toBe("/v4/dex/spot-pairs/latest");
-    expect(endpoints.dex.quotes).toBe("/v4/dex/pairs/quotes/latest");
-    expect(endpoints.dex.ohlcv).toBe("/v4/dex/pairs/ohlcv/latest");
-    expect(endpoints.dex.ohlcvHistorical).toBe("/v4/dex/pairs/ohlcv/historical");
-    expect(endpoints.dex.trades).toBe("/v4/dex/pairs/trade/latest");
+  describe("Cryptocurrency", (): void => {
+    const e = (name: string): string => getEndpoint(item, name, "cryptocurrency");
+    test("List", (): void => expect(e("CoinMarketCap ID Map")).toBe(endpoints.crypto.map));
+    test("Metadata", (): void => expect(e("Metadata v2")).toBe(endpoints.crypto.metadata));
+    test("Listings Latest", (): void => expect(e("Listings Latest")).toBe(endpoints.crypto.listings));
+    test("Listings New", (): void => expect(e("Listings New")).toBe(endpoints.crypto.listingsNew));
+    test("Listings Historical", (): void => expect(e("Listings Historical")).toBe(endpoints.crypto.listingsHistorical));
+    test("Quotes Latest", (): void => expect(e("Quotes Latest v2")).toBe(endpoints.crypto.quotes));
+    test("Quotes Historical", (): void => expect(e("Quotes Historical v2")).toBe(endpoints.crypto.quotesHistorical));
+    test("Quotes Historical v3", (): void =>
+      expect(e("Quotes Historical v3")).toBe(endpoints.crypto.quotesHistoricalV3));
+    test("Market Pairs Latest", (): void => expect(e("Market Pairs Latest v2")).toBe(endpoints.crypto.marketPairs));
+    test("OHLCV Latest", (): void => expect(e("OHLCV Latest v2")).toBe(endpoints.crypto.ohlcv));
+    test("OHLCV Historical", (): void => expect(e("OHLCV Historical v2")).toBe(endpoints.crypto.ohlcvHistorical));
+    test("Price Performance Stats", (): void =>
+      expect(e("Price Performance Stats v2")).toBe(endpoints.crypto.performance));
+    test("Categories", (): void => expect(e("Categories")).toBe(endpoints.crypto.categories));
+    test("Category", (): void => expect(e("Category")).toBe(endpoints.crypto.category));
+    test("Airdrops", (): void => expect(e("Airdrops")).toBe(endpoints.crypto.airdrops));
+    test("Airdrop", (): void => expect(e("Airdrop")).toBe(endpoints.crypto.airdrop));
+    test("Trending Latest", (): void => expect(e("Trending Latest")).toBe(endpoints.crypto.trending));
+    test("Trending Most Visited", (): void => expect(e("Trending Most Visited")).toBe(endpoints.crypto.mostVisited));
+    test("Trending Gainers & Losers", (): void =>
+      expect(e("Trending Gainers & Losers")).toBe(endpoints.crypto.gainersLosers));
   });
 
-  test("cex", (): void => {
-    expect(endpoints.cex.map).toBe("/v1/exchange/map");
-    expect(endpoints.cex.metadata).toBe("/v1/exchange/info");
-    expect(endpoints.cex.listings).toBe("/v1/exchange/listings/latest");
-    expect(endpoints.cex.quotes).toBe("/v1/exchange/quotes/latest");
-    expect(endpoints.cex.quotesHistorical).toBe("/v1/exchange/quotes/historical");
-    expect(endpoints.cex.pairs).toBe("/v1/exchange/market-pairs/latest");
-    expect(endpoints.cex.assets).toBe("/v1/exchange/assets");
+  describe("Dexes", (): void => {
+    test("Listings", (): void => expect("/v4/dex/listings/quotes").toBe(endpoints.dex.listings));
+    test("Metadata", (): void => expect("/v4/dex/listings/info").toBe(endpoints.dex.metadata));
+    test("Networks", (): void => expect("/v4/dex/networks/list").toBe(endpoints.dex.networks));
+    test("Pairs", (): void => expect("/v4/dex/spot-pairs/latest").toBe(endpoints.dex.pairs));
+    test("Quotes", (): void => expect("/v4/dex/pairs/quotes/latest").toBe(endpoints.dex.quotes));
+    test("OHLCV Latest", (): void => expect("/v4/dex/pairs/ohlcv/latest").toBe(endpoints.dex.ohlcv));
+    test("OHLCV Historical", (): void => expect("/v4/dex/pairs/ohlcv/historical").toBe(endpoints.dex.ohlcvHistorical));
+    test("Trade", (): void => expect("/v4/dex/pairs/trade/latest").toBe(endpoints.dex.trades));
   });
 
-  test("metrics", (): void => {
-    expect(endpoints.metric.quotes).toBe("/v1/global-metrics/quotes/latest");
-    expect(endpoints.metric.quotesHistorical).toBe("/v1/global-metrics/quotes/historical");
-    expect(endpoints.metric.index).toBe("/v3/index/cmc100-latest");
-    expect(endpoints.metric.indexHistorical).toBe("/v3/index/cmc100-historical");
-    expect(endpoints.metric.fearAndGreed).toBe("/v3/fear-and-greed/latest");
-    expect(endpoints.metric.fearAndGreedHistorical).toBe("/v3/fear-and-greed/historical");
+  describe("Exchange", (): void => {
+    const e = (name: string): string => getEndpoint(item, name, "exchange");
+    test("List", (): void => expect(e("CoinMarketCap ID Map")).toBe(endpoints.cex.map));
+    test("Metadata", (): void => expect(e("Metadata")).toBe(endpoints.cex.metadata));
+    test("Listings", (): void => expect(e("Listings Latest")).toBe(endpoints.cex.listings));
+    test("Quotes Latest", (): void => expect(e("Quotes Latest")).toBe(endpoints.cex.quotes));
+    test("Quotes Historical", (): void => expect(e("Quotes Historical")).toBe(endpoints.cex.quotesHistorical));
+    test("Market Pairs", (): void => expect(e("Market Pairs Latest")).toBe(endpoints.cex.pairs));
+    test("Assets", (): void => expect(e("Exchange Assets")).toBe(endpoints.cex.assets));
   });
 
-  test("community", (): void => {
-    expect(endpoints.community.news).toBe("/v1/content/latest");
-    expect(endpoints.community.top).toBe("/v1/content/posts/top");
-    expect(endpoints.community.latest).toBe("/v1/content/posts/latest");
-    expect(endpoints.community.comments).toBe("/v1/content/posts/comments");
-    expect(endpoints.community.trendingTopic).toBe("/v1/community/trending/topic");
-    expect(endpoints.community.trendingToken).toBe("/v1/community/trending/token");
+  describe("Metrics", (): void => {
+    const m = (name: string): string => getEndpoint(item, name, "global-metrics");
+    const f = (name: string): string => getEndpoint(item, name, "fear-and-greed");
+
+    test("Quotes Latest", (): void => expect(m("Quotes Latest")).toBe(endpoints.metric.quotes));
+    test("Quotes Historical", (): void => expect(m("Quotes Historical")).toBe(endpoints.metric.quotesHistorical));
+    test("CMC100 Latest", (): void => expect("/v3/index/cmc100-latest").toBe(endpoints.metric.index));
+    test("CMC100 Historical", (): void => expect("/v3/index/cmc100-historical").toBe(endpoints.metric.indexHistorical));
+    test("Fear and Greed Latest", (): void =>
+      expect(f("CMC Crypto Fear and Greed Latest")).toBe(endpoints.metric.fearAndGreed));
+    test("Fear and Greed Historical", (): void =>
+      expect(f("CMC Crypto Fear and Greed Historical")).toBe(endpoints.metric.fearAndGreedHistorical));
   });
 
-  test("misc", (): void => {
-    expect(endpoints.misc.fiat).toBe("/v1/fiat/map");
-    expect(endpoints.misc.priceConversion).toBe("/v2/tools/price-conversion");
+  describe("Community", (): void => {
+    const c = (name: string): string => getEndpoint(item, name, "community");
+    const p = (name: string): string => getEndpoint(item, name, "content");
+    test("Content Latest", (): void => expect(p("Content Latest")).toBe(endpoints.community.news));
+    test("Content Top Posts", (): void => expect(p("Content Top Posts")).toBe(endpoints.community.top));
+    test("Content Latest Posts", (): void => expect(p("Content Latest Posts")).toBe(endpoints.community.latest));
+    test("Content Post Comments", (): void => expect(p("Content Post Comments")).toBe(endpoints.community.comments));
+    test("Community Trending Topics", (): void =>
+      expect(c("Community Trending Topics")).toBe(endpoints.community.trendingTopic));
+    test("Community Trending Tokens", (): void =>
+      expect(c("Community Trending Tokens")).toBe(endpoints.community.trendingToken));
+  });
+
+  describe("Tools", (): void => {
+    test("Fiat Currencies", (): void =>
+      expect(getEndpoint(item, "CoinMarketCap ID Map", "fiat")).toBe(endpoints.misc.fiat));
+    test("Price Conversion", (): void =>
+      expect(getEndpoint(item, "Price Conversion v2", "tools")).toBe(endpoints.misc.priceConversion));
   });
 });
