@@ -1,128 +1,150 @@
 /**
- * Endpoints that return data around cryptocurrencies such as ordered cryptocurrency lists or price and volume data.
+ * Various endpoints for accessing CoinMarketCap cryptocurrency data.
+ *
+ * @property {string} map - Endpoint for CoinMarketCap cryptocurrency ID map.
+ * @property {string} metadata - Endpoint for cryptocurrency metadata.
+ * @property {string} listings - Endpoint for latest cryptocurrency listings.
+ * @property {string} listingsNew - Endpoint for new cryptocurrency listings.
+ * @property {string} listingsHistorical - Endpoint for historical cryptocurrency listings.
+ * @property {string} quotes - Endpoint for latest cryptocurrency quotes.
+ * @property {string} quotesHistorical - Endpoint for historical cryptocurrency quotes.
+ * @property {string} quotesHistoricalV3 - Endpoint for historical cryptocurrency quotes (version 3).
+ * @property {string} marketPairs - Endpoint for latest cryptocurrency market pairs.
+ * @property {string} ohlcv - Endpoint for latest OHLCV (Open, High, Low, Close, Volume) data.
+ * @property {string} ohlcvHistorical - Endpoint for historical OHLCV data.
+ * @property {string} performance - Endpoint for latest cryptocurrency price performance statistics.
+ * @property {string} categories - Endpoint for cryptocurrency categories.
+ * @property {string} category - Endpoint for a specific cryptocurrency category.
+ * @property {string} airdrops - Endpoint for cryptocurrency airdrops.
+ * @property {string} airdrop - Endpoint for a specific cryptocurrency airdrop.
+ * @property {string} trending - Endpoint for latest trending cryptocurrencies.
+ * @property {string} mostVisited - Endpoint for most visited trending cryptocurrencies.
+ * @property {string} gainersLosers - Endpoint for trending gainers and losers in cryptocurrencies.
  */
 const crypto = {
-  // CoinMarketCap cryptocurrency ID map
   map: "/v1/cryptocurrency/map",
-  // Metadata
   metadata: "/v2/cryptocurrency/info",
-  // Latest listings
   listings: "/v1/cryptocurrency/listings/latest",
-  // New listings
   listingsNew: "/v1/cryptocurrency/listings/new",
-  //  Historical listings
   listingsHistorical: "/v1/cryptocurrency/listings/historical",
-  // Latest quotes
   quotes: "/v2/cryptocurrency/quotes/latest",
-  // Historical quotes
   quotesHistorical: "/v2/cryptocurrency/quotes/historical",
   quotesHistoricalV3: "/v3/cryptocurrency/quotes/historical",
-  // Latest market pairs
   marketPairs: "/v2/cryptocurrency/market-pairs/latest",
-  // Latest OHLCV
   ohlcv: "/v2/cryptocurrency/ohlcv/latest",
-  // Historical OHLCV
   ohlcvHistorical: "/v2/cryptocurrency/ohlcv/historical",
-  // Price performance Stats
   performance: "/v2/cryptocurrency/price-performance-stats/latest",
-  // Categories
   categories: "/v1/cryptocurrency/categories",
-  // Category
   category: "/v1/cryptocurrency/category",
-  // Airdrops
   airdrops: "/v1/cryptocurrency/airdrops",
-  // Airdrop
   airdrop: "/v1/cryptocurrency/airdrop",
-  // Trending Latest
   trending: "/v1/cryptocurrency/trending/latest",
-  // Trending Most Visited
   mostVisited: "/v1/cryptocurrency/trending/most-visited",
-  // Trending Gainers & Losers
   gainersLosers: "/v1/cryptocurrency/trending/gainers-losers",
 };
 
+/**
+ * Various endpoints for decentralized exchange (DEX) data.
+ *
+ * @property {string} listings - Endpoint for the latest listings of DEXes.
+ * @property {string} metadata - Endpoint for metadata of DEXes.
+ * @property {string} networks - Endpoint for retrieving all networks on CoinMarketCap (CMC).
+ * @property {string} pairs - Endpoint for the latest listings of trading pairs.
+ * @property {string} quotes - Endpoint for the latest quotes of trading pairs.
+ * @property {string} ohlcv - Endpoint for the latest OHLCV (Open, High, Low, Close, Volume) quotes.
+ * @property {string} ohlcvHistorical - Endpoint for historical OHLCV quotes.
+ * @property {string} trades - Endpoint for the latest 100 trades.
+ */
 const dex = {
-  // Latest listings of dexes
   listings: "/v4/dex/listings/quotes",
-  // Metadata of dexes
   metadata: "/v4/dex/listings/info",
-  // Returns all networks on CMC
   networks: "/v4/dex/networks/list",
-  // Latest listings of pairs
   pairs: "/v4/dex/spot-pairs/latest",
-  // Latest quotes
   quotes: "/v4/dex/pairs/quotes/latest",
-  // Latest OHLCV quotes
   ohlcv: "/v4/dex/pairs/ohlcv/latest",
-  // Historical OHLCV quotes
   ohlcvHistorical: "/v4/dex/pairs/ohlcv/historical",
-  // Latest 100 trades
   trades: "/v4/dex/pairs/trade/latest",
 };
 
 /**
- * Endpoints that return data around cryptocurrency exchanges such as ordered exchange lists and market pair data.
+ * Endpoints for various CoinMarketCap exchange-related API calls.
+ *
+ * @property {string} map - Endpoint for retrieving the CoinMarketCap exchange ID map.
+ * @property {string} metadata - Endpoint for retrieving metadata about exchanges.
+ * @property {string} listings - Endpoint for retrieving the latest exchange listings.
+ * @property {string} quotes - Endpoint for retrieving the latest exchange quotes.
+ * @property {string} quotesHistorical - Endpoint for retrieving historical exchange quotes.
+ * @property {string} pairs - Endpoint for retrieving the latest market pairs on exchanges.
+ * @property {string} assets - Endpoint for retrieving exchange assets.
  */
 const cex = {
-  // CoinMarketCap exchange ID map
   map: "/v1/exchange/map",
-  // Metadata
   metadata: "/v1/exchange/info",
-  // Latest listings
   listings: "/v1/exchange/listings/latest",
-  // Latest quotes
   quotes: "/v1/exchange/quotes/latest",
-  // Historical quotes
   quotesHistorical: "/v1/exchange/quotes/historical",
-  // Latest market pairs
   pairs: "/v1/exchange/market-pairs/latest",
-  // Exchange Assets
   assets: "/v1/exchange/assets",
 };
 
 /**
- * Endpoints that return aggregate market data such as global market cap and BTC dominance.
+ * Endpoints for various global metrics and indices.
+ *
+ * @property {string} quotes - Endpoint for the latest global metrics quotes.
+ * @property {string} quotesHistorical - Endpoint for historical global metrics quotes.
+ * @property {string} index - Endpoint for the latest CoinMarketCap 100 Index.
+ * @property {string} indexHistorical - Endpoint for historical CoinMarketCap 100 Index.
+ * @property {string} fearAndGreed - Endpoint for the latest CMC Crypto Fear and Greed Index.
+ * @property {string} fearAndGreedHistorical - Endpoint for historical CMC Crypto Fear and Greed Index.
  */
 const metric = {
-  // Latest global metrics
   quotes: "/v1/global-metrics/quotes/latest",
-  // Historical global metrics
   quotesHistorical: "/v1/global-metrics/quotes/historical",
-
-  // Latest CoinMarketCap 100 Index
   index: "/v3/index/cmc100-latest",
-  // Historical CoinMarketCap 100 Index
   indexHistorical: "/v3/index/cmc100-historical",
-
-  // Latest CMC Crypto Fear and Greed Index
   fearAndGreed: "/v3/fear-and-greed/latest",
-  // Historical CMC Crypto Fear and Greed Index
   fearAndGreedHistorical: "/v3/fear-and-greed/historical",
 };
 
+/**
+ * Endpoints related to community content and trends.
+ *
+ * @property {string} news - Endpoint for fetching the latest content.
+ * @property {string} top - Endpoint for fetching the top posts.
+ * @property {string} latest - Endpoint for fetching the latest posts.
+ * @property {string} comments - Endpoint for fetching comments on posts.
+ * @property {string} trendingTopic - Endpoint for fetching trending community topics.
+ * @property {string} trendingToken - Endpoint for fetching trending community tokens.
+ */
 const community = {
-  // Content latest
   news: "/v1/content/latest",
-  // Content top posts
   top: "/v1/content/posts/top",
-  // Content latest posts
   latest: "/v1/content/posts/latest",
-  // Content post comments
   comments: "/v1/content/posts/comments",
-
-  // Community Trending Topics
   trendingTopic: "/v1/community/trending/topic",
-  // Community Trending Tokens
   trendingToken: "/v1/community/trending/token",
 };
 
+/**
+ * Various endpoints for tools/other CoinMarketCap API.
+ *
+ * @property {string} fiat - Endpoint for retrieving the list of fiat currencies.
+ * @property {string} priceConversion - Endpoint for the price conversion tool.
+ */
 const misc = {
-  // CoinMarketCap fiat list
   fiat: "/v1/fiat/map",
-
-  // Price conversion tool
   priceConversion: "/v2/tools/price-conversion",
 };
 
+/**
+ * Various of endpoint the CoinMarketCap API.
+ *
+ * @property {object} crypto - Endpoints related to cryptocurrency data.
+ * @property {object} dex - Endpoints related to decentralized exchanges.
+ * @property {object} cex - Endpoints related to centralized exchanges.
+ * @property {object} metric - Endpoints related to various metrics and statistics.
+ * @property {object} community - Endpoints related to community data and interactions.
+ * @property {object} misc - Miscellaneous endpoints that do not fit into other categories.
+ */
 const endpoints = { crypto, dex, cex, metric, community, misc };
 export default endpoints;
