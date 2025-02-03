@@ -1,23 +1,36 @@
-import { CmcApikeyDisabledError } from "@error/cmc-apikey-disabled.error";
-import { CmcApikeyRequiredError } from "@error/cmc-apikey-required.error";
-import { CmcInvalidError } from "@error/cmc-invalid.error";
-import { CmcMissingError } from "@error/cmc-missing.error";
-import { CmcPaymentExpiredError } from "@error/cmc-payment-expired.error";
-import { CmcPaymentRequiredError } from "@error/cmc-payment-required.error";
-import { CmcPlanUnauthorizeError } from "@error/cmc-plan-unauthorize.error";
-import { CmcDailyRateLimitError } from "@error/cmc-rate-limit-daily.error";
-import { CmcIpRateLimitError } from "@error/cmc-rate-limit-ip.error";
-import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
-import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
-import { CmcRequestError } from "@error/cmc-request.error";
+import type { CmcApikeyDisabledError } from "@error/cmc-apikey-disabled.error";
+import type { CmcApikeyRequiredError } from "@error/cmc-apikey-required.error";
+import type { CmcInvalidError } from "@error/cmc-invalid.error";
+import type { CmcMissingError } from "@error/cmc-missing.error";
+import type { CmcPaymentExpiredError } from "@error/cmc-payment-expired.error";
+import type { CmcPaymentRequiredError } from "@error/cmc-payment-required.error";
+import type { CmcPlanUnauthorizeError } from "@error/cmc-plan-unauthorize.error";
+import type { CmcDailyRateLimitError } from "@error/cmc-rate-limit-daily.error";
+import type { CmcIpRateLimitError } from "@error/cmc-rate-limit-ip.error";
+import type { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
+import type { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
+import type { CmcRequestError } from "@error/cmc-request.error";
 
-export interface CmcResponseStatus {
+export type CmcBaseResponse<TData = unknown> =
+  | {
+      data: TData;
+      status: CmcStatusResponse;
+    }
+  | {
+      data?: {
+        data: TData;
+        status: CmcStatusResponse;
+      };
+      status?: CmcStatusResponse;
+    };
+
+export interface CmcStatusResponse {
   timestamp: string;
-  error_code: number;
+  error_code: number | null;
   error_message: string;
   elapsed: number;
   credit_count: number;
-  notice: string;
+  notice?: string;
 }
 
 export type CmcErrorClass =

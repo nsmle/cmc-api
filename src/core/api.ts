@@ -1,10 +1,10 @@
-import { Client } from "@core/client";
 import { CexRepository } from "@repository/cex.repository";
 import { CommunityRepository } from "@repository/community.repository";
 import { CryptoRepository } from "@repository/crypto.repository";
 import { DexRepository } from "@repository/dex.repository";
 import { MetricRepository } from "@repository/metric.repository";
 import { MiscRepository } from "@repository/misc.repository";
+import { Client } from "@core/client";
 
 export class CoinMarketCapApi {
   public client = new Client();
@@ -20,7 +20,14 @@ export class CoinMarketCapApi {
     if (apikey) this.client.setApiKey(apikey);
   }
 
-  public setApiKey(apiKey: string): void {
-    this.client.setApiKey(apiKey);
+  public sandbox(): CoinMarketCapApi {
+    this.client = this.client.sandbox();
+    return this;
+  }
+
+  public static sandbox(): CoinMarketCapApi {
+    const instance = new CoinMarketCapApi();
+    instance.client = instance.client.sandbox();
+    return instance;
   }
 }

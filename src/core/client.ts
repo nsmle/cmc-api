@@ -11,8 +11,8 @@ import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
 import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
 import { CmcRequestError } from "@error/cmc-request.error";
 import { CmcErrorCode } from "@error/cmc.error";
-import { Pair } from "@option/common.type";
-import { CmcErrorClass, CmcResponseStatus } from "@response/status.response";
+import type { Pair } from "@option/common.type";
+import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@response/status.response";
 
 /**
  * The `Client` class provides methods to interact with the CoinMarketCap API.
@@ -49,14 +49,22 @@ export class Client {
   /**
    * Represents the status of the CMC response.
    */
-  protected status: CmcResponseStatus;
+  public status: CmcStatusResponse;
+
+  /**
+   * The API key used for accessing the sandbox environment of the service.
+   * This key is intended for testing purposes and should not be used in production.
+   *
+   * @constant {string}
+   */
+  private static readonly SandboxApikey = "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c";
 
   /**
    * A collection of base URLs for the CoinMarketCap API.
    * @readonly
    * @see {@link https://pro.coinmarketcap.com/api/v1#section/Quick-Start-Guide | Quick Start Guide}
    */
-  public static readonly BaseURL = {
+  private static readonly BaseURL = {
     Sandbox: "https://sandbox-api.coinmarketcap.com",
     Pro: "https://pro-api.coinmarketcap.com",
   };
@@ -76,7 +84,7 @@ export class Client {
    * @returns {Promise<TData>} - A promise that resolves to the response data of type `TData`.
    * @throws {CmcErrorClass} Will throw an error if the response status indicates an error.
    */
-  public async req<TData = any, TQuery = Pair<string, string>>(
+  public async req<TData = unknown, TQuery = Pair<string, string | string[] | number | number[] | boolean>>(
     endpoint: string,
     query?: TQuery,
     headers?: Pair<string, string>,
@@ -86,9 +94,9 @@ export class Client {
       headers: this.genHeaders(headers),
     });
 
-    const result: any = await request.json();
-    const status: CmcResponseStatus = result?.status;
-    const data: TData = result?.data;
+    const result: CmcBaseResponse<TData> = await request.json();
+    const status: CmcStatusResponse = result?.data?.status || result?.status;
+    const data: TData = (result?.data?.data || result?.data) as TData;
 
     this.status = status;
     if (status.error_code > 0) throw this.error(status);
@@ -99,6 +107,7 @@ export class Client {
    * Sets the API key for the client.
    *
    * @param apiKey - The API key to be set.
+   * @returns The client instance with the API key set.
    * @example
    * ```typescript
    * const apikey = process.env.COINMARKETCAP_APIKEY;
@@ -106,14 +115,16 @@ export class Client {
    * cmc.client.setApiKey('dfa3195f-f1d4-f1c1-a1fa-83461b5f42eb');
    * ```
    */
-  public setApiKey(apiKey: string): void {
+  public setApiKey(apiKey: string): Client {
     this.apikey = apiKey;
+    return this;
   }
 
   /**
    * Sets the base URL for the client.
    *
    * @param {string} baseUrl - The base URL to be set.
+   * @returns The client instance with the base URL set.
    * @example
    * ```typescript
    * const apikey = process.env.COINMARKETCAP_APIKEY;
@@ -121,19 +132,26 @@ export class Client {
    * cmc.client.setBaseUrl('https://sandbox-api.coinmarketcap.com');
    * ```
    */
-  public setBaseUrl(baseUrl: string): void {
+  public setBaseUrl(baseUrl: string): Client {
     this.baseURL = baseUrl;
+    return this;
   }
 
   /**
-   * Converts an array of strings or numbers into a single comma-separated string.
+   * Converts an array of strings into a single comma-separated string.
+   * If the input is already a string, it returns the input as is.
    *
-   * @template TValues - The type of values in the array, which can be either string or number.
-   * @param {TValues[]} array - The array of values to be joined into a comma-separated string.
-   * @returns {string} A string with the array values separated by commas.
+   * @param array - The input which can be either a string or an array of strings.
+   * @returns A comma-separated string if the input is an array, otherwise the input string.
    */
-  public commaSeparate<TValues = string | number>(array: TValues[]): string {
-    return array.join(",");
+  public commaSeparate<TValue = string>(array: TValue | TValue[]): string {
+    return Array.isArray(array) ? array.join(",") : String(array);
+  }
+
+  public sandbox(): Client {
+    this.apikey = Client.SandboxApikey;
+    this.baseURL = Client.BaseURL.Sandbox;
+    return this;
   }
 
   /**
@@ -144,9 +162,22 @@ export class Client {
    * @param {TQuery} [query] - An optional object containing query parameters as key-value pairs.
    * @returns {URL} - The generated URL with the provided endpoint and query parameters.
    */
-  private genUri<TQuery = Pair<string, string>>(endpoint: string, query?: TQuery): URL {
+  private genUri<TQuery = Pair<string, string | string[] | number | number[] | boolean>>(
+    endpoint: string,
+    query?: TQuery,
+  ): URL {
     const uri = new URL(endpoint, this.baseURL);
-    for (const key of Object.keys(query)) if (query[key]) uri.searchParams.append(key, query[key]);
+    if (query) {
+      for (const key of Object.keys(query))
+        if (query[key] && query[key] !== "undefined" && query[key] !== "null") {
+          if (Array.isArray(query[key])) {
+            uri.searchParams.append(key, this.commaSeparate(query[key]));
+          } else {
+            uri.searchParams.append(key, String(query?.[key]));
+          }
+        }
+    }
+
     return uri;
   }
 
@@ -167,9 +198,9 @@ export class Client {
   }
 
   /**
-   * Handles errors based on the provided {@link CmcResponseStatus} and returns an appropriate {@link CmcErrorClass} instance.
+   * Handles errors based on the provided {@link CmcStatusResponse} and returns an appropriate {@link CmcErrorClass} instance.
    *
-   * @param {CmcResponseStatus} status - The status object containing the error code and other relevant information.
+   * @param {CmcStatusResponse} status - The status object containing the error code and other relevant information.
    * @param {any} data - Optional additional data related to the error.
    * @returns An instance of a class extending {@link CmcErrorClass} that corresponds to the specific error code.
    *
@@ -188,7 +219,7 @@ export class Client {
    *
    * If the error code does not match any of the above, a generic {@link CmcRequestError} is returned.
    */
-  private error(status: CmcResponseStatus, data?: any): CmcErrorClass {
+  private error(status: CmcStatusResponse, data?: unknown): CmcErrorClass {
     switch (status.error_code) {
       case CmcErrorCode.ApikeyInvalid:
         return new CmcInvalidError(status, data);
