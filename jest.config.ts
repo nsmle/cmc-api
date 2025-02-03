@@ -9,4 +9,5 @@ export default async (): Promise<Config> => ({
   testEnvironment: "node",
   moduleDirectories: ["node_modules", "<rootDir>"],
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
+  testTimeout: 30000,
 });

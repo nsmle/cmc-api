@@ -1,7 +1,7 @@
-import { CoinMarketCapApi } from "@core/api";
+import type { CoinMarketCapApi } from "@core/api";
 
 export abstract class Repository {
-  public cmc: CoinMarketCapApi;
+  protected cmc: CoinMarketCapApi;
 
   constructor(cmc: CoinMarketCapApi) {
     this.cmc = cmc;

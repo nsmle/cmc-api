@@ -10,4 +10,4 @@ Contributions are welcome. All changes must be submitted via pull request.
 - Use double quote instead of single quote.
 - Print width max 120.
 
-All guidelines, see [eslint.config.mjs](https://github.com/nsmle/cmc-api/blob/main/eslint.config.mjs)
+All guidelines, see [eslint.config.ts](https://github.com/nsmle/cmc-api/blob/main/eslint.config.ts)

@@ -21,7 +21,9 @@
       "@response/*": ["src/responses/*"],
       "@repository/*": ["src/repositories/*"],
       "@option/*": ["src/types/*"],
+      "@type/*": ["src/types/*"],
       "@error/*": ["src/errors/*"],
+      "@util/*": ["src/utils/*"],
       "@cmc/*": ["src/*"]
     },
     "resolveJsonModule": true,
