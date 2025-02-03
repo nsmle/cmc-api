@@ -1,3 +1,4 @@
+import { CmcErrorCode } from "@enum/cmc-error-code.enum";
 import { CmcApikeyDisabledError } from "@error/cmc-apikey-disabled.error";
 import { CmcApikeyRequiredError } from "@error/cmc-apikey-required.error";
 import { CmcInvalidError } from "@error/cmc-invalid.error";
@@ -10,7 +11,6 @@ import { CmcIpRateLimitError } from "@error/cmc-rate-limit-ip.error";
 import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
 import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
 import { CmcRequestError } from "@error/cmc-request.error";
-import { CmcErrorCode } from "@error/cmc.error";
 import type { Pair } from "@option/common.type";
 import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@response/status.response";
 
