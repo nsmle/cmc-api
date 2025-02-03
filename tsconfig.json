@@ -18,6 +18,7 @@
     "allowJs": false,
     "paths": {
       "@core/*": ["src/core/*"],
+      "@enum/*": ["src/enums/*"],
       "@response/*": ["src/responses/*"],
       "@repository/*": ["src/repositories/*"],
       "@option/*": ["src/types/*"],
