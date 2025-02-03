@@ -1,12 +1,16 @@
-import endpoints from "@core/endpoints";
 import { beforeAll, describe, expect, test } from "@jest/globals";
+import endpoints from "@core/endpoints";
 
-// eslint-disable-next-line
-const getEndpoint = (postmanItems: any[], name: string, key: string): string => {
-  // eslint-disable-next-line
-  function search(items: any[]): string {
+interface PostmanItem {
+  name?: string;
+  request?: { url?: { path?: string[] } };
+  item?: PostmanItem[];
+}
+
+const getEndpoint = (postmanItems: PostmanItem[], name: string, key: string): string => {
+  function search(items: PostmanItem[]): string {
     for (const item of items) {
-      if (item.name === name && item.request && item?.request?.url?.path?.includes(key))
+      if (item.name === name && item.request?.url?.path?.includes(key))
         return [""].concat(item.request.url.path ?? [])?.join("/");
       if (item.item) {
         const result = search(item.item);
@@ -20,12 +24,11 @@ const getEndpoint = (postmanItems: any[], name: string, key: string): string => 
 };
 
 describe("Endpoints", (): void => {
-  // eslint-disable-next-line
-  let item: any[] = [];
+  let item: unknown[] = [];
 
   beforeAll(async (): Promise<void> => {
     const postman = await fetch("https://pro-api.coinmarketcap.com/v1/tools/postman").then(
-      (res): Promise<any> => res.json(), // eslint-disable-line @typescript-eslint/no-explicit-any
+      async (res): Promise<{ item: unknown[] }> => (await res.json()) as { item: unknown[] },
     );
     item = postman.item;
   });
