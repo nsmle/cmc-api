@@ -25,7 +25,8 @@
       "@type/*": ["src/types/*"],
       "@error/*": ["src/errors/*"],
       "@util/*": ["src/utils/*"],
-      "@cmc/*": ["src/*"]
+      "@cmc/*": ["src/*"],
+      "cmc-api": ["src"]
     },
     "resolveJsonModule": true,
     "noUnusedLocals": true
