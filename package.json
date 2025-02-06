@@ -1,6 +1,6 @@
 {
   "name": "cmc-api",
-  "version": "0.5.1",
+  "version": "0.5.4",
   "description": "CoinMarketCap RESTful API Wrapper",
   "keywords": [
     "coinmarketcap",
@@ -44,7 +44,8 @@
     "lint:fix": "eslint --fix",
     "lint:build": "eslint --global build",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

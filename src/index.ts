@@ -1,3 +1,5 @@
+import { CoinMarketCapApi } from "@core/api";
+
 export * from "@core/api";
 
 export * from "@repository/cex.repository";
@@ -9,4 +11,4 @@ export * from "@repository/misc.repository";
 
 export * from "@response/crypto.response";
 
-export default "@core/api";
+export default CoinMarketCapApi;

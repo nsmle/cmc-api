@@ -29,8 +29,7 @@ import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@respons
  * const apikey = process.env.COINMARKETCAP_APIKEY;
  * const cmc = new CoinMarketCapApi(apikey);
  *
- * const data = await client.req('/v1/cryptocurrency/map');
- *
+ * const data = await cmc.client.req('/v1/cryptocurrency/map');
  * console.log(data);
  */
 export class Client {
@@ -74,7 +73,7 @@ export class Client {
   }
 
   /**
-   * Sends an HTTP GET request to the specified endpoint with optional query parameters and headers.
+   * Send an HTTP GET request to the specified endpoint with optional query parameters and headers.
    *
    * @template TData - The expected type of the response data.
    * @template TQuery - The type of the query parameters, defaults to `Pair<string, string>`.
@@ -104,7 +103,7 @@ export class Client {
   }
 
   /**
-   * Sets the API key for the client.
+   * Set the API key for the client.
    *
    * @param apiKey - The API key to be set.
    * @returns The client instance with the API key set.
@@ -121,7 +120,7 @@ export class Client {
   }
 
   /**
-   * Sets the base URL for the client.
+   * Set the base URL for the client.
    *
    * @param {string} baseUrl - The base URL to be set.
    * @returns The client instance with the base URL set.
