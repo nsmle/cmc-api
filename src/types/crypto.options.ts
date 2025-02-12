@@ -13,18 +13,6 @@ export type CryptoConvert = number | string | number[] | string[];
 export type ListSort = "cmc_rank" | "id";
 
 /**
- * Represents the listing status of a cryptocurrency.
- *
- * The status can be one of the following string values:
- * - `active`: The cryptocurrency is currently active.
- * - `inactive`: The cryptocurrency is currently inactive.
- * - `untracked`: The cryptocurrency is not being tracked.
- *
- * Alternatively, it can be an array of these string values.
- */
-export type ListingStatus = "active" | "inactive" | "untracked" | ("active" | "inactive" | "untracked")[];
-
-/**
  * Represents a list of auxiliary fields that can be used in the context of crypto options.
  *
  * The `AuxiliaryList` type can be one of the following string literals:

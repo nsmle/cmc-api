@@ -1,7 +1,7 @@
 import endpoints from "@core/endpoints";
 import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
-import type { Interval, Pair } from "@option/common.type";
+import type { Interval, ListingStatus, Pair } from "@option/common.type";
 import type {
   AuxiliaryList,
   AuxiliaryListing,
@@ -20,7 +20,6 @@ import type {
   ListingHistorySort,
   ListingSort,
   ListingSortDir,
-  ListingStatus,
   ListingTag,
   ListSort,
   MarketPairCategory,
