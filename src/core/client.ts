@@ -68,6 +68,10 @@ export class Client {
     Pro: "https://pro-api.coinmarketcap.com",
   };
 
+  /**
+   * Initializes a new instance of the `Client` class.
+   * The constructor sets the base URL to the Pro API by default.
+   */
   constructor() {
     if (!this.baseURL) this.baseURL = Client.BaseURL.Pro;
   }
@@ -76,14 +80,14 @@ export class Client {
    * Send an HTTP GET request to the specified endpoint with optional query parameters and headers.
    *
    * @template TData - The expected type of the response data.
-   * @template TQuery - The type of the query parameters, defaults to `Pair<string, string>`.
+   * @template TQuery - The type of the query parameters, defaults to `Pair<string, string | number | (string | number)[] | boolean>`.
    * @param {string} endpoint - The API endpoint to send the request to.
    * @param {TQuery} [query] - Optional query parameters to include in the request.
    * @param {Pair<string, string>} [headers] - Optional headers to include in the request.
    * @returns {Promise<TData>} - A promise that resolves to the response data of type `TData`.
    * @throws {CmcErrorClass} Will throw an error if the response status indicates an error.
    */
-  public async req<TData = unknown, TQuery = Pair<string, string | string[] | number | number[] | boolean>>(
+  public async req<TData = unknown, TQuery = Pair<string, string | number | (string | number)[] | boolean>>(
     endpoint: string,
     query?: TQuery,
     headers?: Pair<string, string>,
@@ -140,13 +144,19 @@ export class Client {
    * Converts an array of strings into a single comma-separated string.
    * If the input is already a string, it returns the input as is.
    *
-   * @param array - The input which can be either a string or an array of strings.
+   * @template TValue - The type of the input value, defaults to `string | number | (string | number)[]`.
+   * @param {TValue} value - The input which can be either a string or an array of strings.
    * @returns A comma-separated string if the input is an array, otherwise the input string.
    */
-  public commaSeparate<TValue = string>(array: TValue | TValue[]): string {
-    return Array.isArray(array) ? array.join(",") : String(array);
+  public commaSeparate<TValue = string | number | (string | number)[]>(value: TValue): string {
+    return Array.isArray(value) ? value.join(",") : String(value);
   }
 
+  /**
+   * Set up the client to use the CoinMarketCap API sandbox environment.
+   * This method sets the API key to the sandbox key and the base URL to the sandbox URL.
+   * @returns The client instance with the sandbox environment set.
+   */
   public sandbox(): Client {
     this.apikey = Client.SandboxApikey;
     this.baseURL = Client.BaseURL.Sandbox;
@@ -156,12 +166,12 @@ export class Client {
   /**
    * Generates a complete URI with query parameters.
    *
-   * @template TQuery - The type of the query parameters, defaults to a pair of strings.
+   * @template TQuery - The type of the query parameters, defaults to `Pair<string, string | number | (string | number)[] | boolean>`.
    * @param {string} endpoint - The endpoint to append to the base URL.
    * @param {TQuery} [query] - An optional object containing query parameters as key-value pairs.
    * @returns {URL} - The generated URL with the provided endpoint and query parameters.
    */
-  private genUri<TQuery = Pair<string, string | string[] | number | number[] | boolean>>(
+  private genUri<TQuery = Pair<string, string | number | (string | number)[] | boolean>>(
     endpoint: string,
     query?: TQuery,
   ): URL {
