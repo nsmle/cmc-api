@@ -258,8 +258,96 @@ for (const trending of trendings) {
 }
 ```
 
+
 ### Exchanges _(CEX)_
-**(_soon_)**
+
+#### ID Map
+###### get a list of all active exchanges
+```typescript
+import type { CexIdMapResponses } from "cmc-api";
+const exchanges = await cmc.cex.list<CexIdMapResponses>();
+for (const exchange of exchanges) {
+   console.log(exchange.id, exchange.name, exchange.is_active);
+}
+```
+###### get binance exchange
+```typescript
+import type { CexIdMapResponse } from "cmc-api";
+const exchanges = await cmc.cex.list<CexIdMapResponse<"binance">>("active", { cexSlug: "binance" });
+console.log(exchanges.binance);
+```
+
+#### Metadata
+###### get exchange metadata by ID
+```typescript
+const metadata = await cmc.cex.metadata<"3673">({ id: 3673 });
+console.log(metadata["3673"]);
+```
+###### get multiple exchange metadata by slug
+```typescript
+const metadata = await cmc.cex.metadata<"binance" | "okx">({ slug: ["binance", "okx"] });
+console.log(metadata.binance);
+console.log(metadata.okx);
+```
+
+#### Assets
+###### get exchange assets by ID
+```typescript
+const assets = await cmc.cex.assets<"3673">(3673);
+for (const asset of assets["3673"]) {
+  console.log(asset.balance, asset.wallet_address);
+}
+```
+
+#### Listings
+###### get the 10 latest exchange listings with and convert to EUR and USD
+```typescript
+const listings = await cmc.cex.listing<"EUR" | "USD">(10, 1, "all", "all", "exchange_score", "desc", ["EUR", "USD"]);
+for (const listing of listings) {
+  console.log(listing.id, listing.name, listing.quote.EUR.volume_24h, listing.quote.USD.volume_24h);
+}
+```
+
+#### Market Pairs
+###### get binance market pairs by ID
+```typescript
+const marketPairs = await cmc.cex.marketPairs<"3673">({ id: 3673 });
+console.log(marketPairs["3673"]);
+```
+###### get binance market pairs by slug
+```typescript
+const marketPairs = await cmc.cex.marketPairs<"binance">({ slug: "binance" });
+console.log(marketPairs.binance);
+```
+
+#### Latest Quotes
+###### get latest binance quotes by id for BTC and ETH
+```typescript
+const quotes = await cmc.cex.quotes<"3673", "BTC" | "ETH">({ id: 3673 }, ["BTC", "ETH"]);
+console.log(quotes["3673"].quote.BTC.volume_24h, quotes["3673"].quote.ETH.volume_24h);
+```
+###### get latest binance quotes by slug for BTC and ETH
+```typescript
+const quotes = await cmc.cex.quotes<"binance", "BTC" | "ETH">({ slug: "binance" }, ["BTC", "ETH"]);
+console.log(quotes.binance.quote.BTC.volume_24h, quotes.binance.quote.ETH.volume_24h);
+```
+
+#### Historical Quotes
+###### get binance historical quotes by exchange slug in interval 4h and convert to BTC and ETH
+```typescript
+const start = new Date("2024-12-01T00:00:00Z");
+const end = new Date("2025-01-01T00:00:00Z");
+const quotesHistorical = await cmc.cex.quotesHistory<"binance", "BTC" | "ETH">({ slug: "binance" }, start, end, 10, "4h", ["BTC", "ETH"]);
+
+for (const binanceQuote of quotesHistorical.binance.quotes) {
+  console.log(
+    binanceQuote.timestamp,
+    binanceQuote.num_market_pairs,
+    binanceQuote.quote.BTC.volume_24h,
+    binanceQuote.quote.ETH.volume_24h,
+  );
+}
+```
 
 ### Decentralized Exchange _(DEX)_
 **(_soon_)**
