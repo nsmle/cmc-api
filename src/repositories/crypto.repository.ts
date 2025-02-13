@@ -1,6 +1,7 @@
 import endpoints from "@core/endpoints";
 import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
+import { isNumeric } from "@util/type.util";
 import type { Interval, ListingStatus, Pair } from "@option/common.type";
 import type {
   AuxiliaryList,
@@ -58,6 +59,7 @@ import type {
 } from "@response/crypto.response";
 
 export class CryptoRepository extends Repository {
+  /** @private Endpoints are used to interact with CoinMarketCap Exchange APIs */
   private endpoints = endpoints.crypto;
 
   /**
@@ -72,13 +74,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *No equivalent, this data is only available via API.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyMap | CoinMarketCap ID Map}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyMap | Cryptocurrency ID Map}. \
    * {@link https://pro.coinmarketcap.com/api/v1#section/Best-Practices | CoinMarketCap API Best Practices}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get list cryptocurrencies
@@ -129,13 +131,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cryptocurrency detail page metadata like {@link https://coinmarketcap.com/currencies/bitcoin/ | coinmarketcap.com/currencies/bitcoin/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyInfo | CoinMarketCap Metadata v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyInfo | CoinMarketCap Metadata v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyInfo | Cryptocurrency Metadata v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyInfo | Cryptocurrency Metadata v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get cryptocurrency metadata by symbol
@@ -210,12 +212,12 @@ export class CryptoRepository extends Repository {
    * - {@link https://coinmarketcap.com/new/ coinmarketcap.com/new/}.
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsLatest | CoinMarketCap Listings Latest}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsLatest | Cryptocurrency Listings Latest}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get cryptocurrency listing latest
@@ -282,7 +284,7 @@ export class CryptoRepository extends Repository {
       circulating_supply_max: filters?.circulatingsupplyMax,
       percent_change_24h_min: filters?.percentChange24hMin,
       percent_change_24h_max: filters?.percentChange24hMax,
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
     });
   }
 
@@ -296,12 +298,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc `new` cryptocurrency page {@link https://coinmarketcap.com/new/ coinmarketcap.com/new/}*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsNew | CoinMarketCap New Listings}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsNew | Cryptocurrency New Listings}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get cryptocurrency listing new and convert to BTC and ETH
@@ -330,7 +332,7 @@ export class CryptoRepository extends Repository {
       limit: limit,
       start: offset,
       sort_dir: sortDir,
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
     });
   }
 
@@ -349,12 +351,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc historical daily crypto ranking snapshot pages like this one on {@link https://coinmarketcap.com/historical/20140202/ | February 02, 2014.}*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsHistorical | Listings Historical}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyListingsHistorical | Cryptocurrency Listings Historical}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get cryptocurrency listing history
@@ -410,7 +412,7 @@ export class CryptoRepository extends Repository {
       sort_dir: sortDir,
       cryptocurrency_type: type,
       aux: aux,
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
     });
   }
 
@@ -424,13 +426,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Latest market data pages for specific cryptocurrencies like {@link https://coinmarketcap.com/currencies/bitcoin/ | coinmarketcap.com/currencies/bitcoin/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyQuotesLatest | Quotes Latest v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyQuotesHistorical | Quotes Latest v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyQuotesLatest | Cryptocurrency Quotes Latest v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyQuotesHistorical | Cryptocurrency Quotes Latest v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get cryptocurrency quotes latests by slug
@@ -479,7 +481,7 @@ export class CryptoRepository extends Repository {
       ...(id?.id && { id: this.cmc.client.commaSeparate(id.id) }),
       ...(id?.slug && { slug: this.cmc.client.commaSeparate(id.slug) }),
       ...(id?.symbol && { symbol: this.cmc.client.commaSeparate(id.symbol) }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       skip_invalid: skipInvalid,
       aux: aux,
     });
@@ -506,14 +508,14 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Latest market data pages for specific cryptocurrencies like {@link https://coinmarketcap.com/currencies/bitcoin/ | coinmarketcap.com/currencies/bitcoin/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV3CryptocurrencyQuotesHistorical | Quotes Historical v3}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyQuotesHistorical | Quotes Historical v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyQuotesHistorical | Quotes Historical v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV3CryptocurrencyQuotesHistorical | Cryptocurrency Quotes Historical v3}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyQuotesHistorical | Cryptocurrency Quotes Historical v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyQuotesHistorical | Cryptocurrency Quotes Historical v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get btc and eth quotes in range "2024-12-01" - "2025-01-01"
@@ -573,7 +575,7 @@ export class CryptoRepository extends Repository {
     return await this.cmc.client.req<TResponse>(endpoint, {
       ...(id?.id && { id: this.cmc.client.commaSeparate(id.id) }),
       ...(id?.symbol && { symbol: this.cmc.client.commaSeparate(id.symbol) }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       count: count,
       interval: interval,
       time_start: dateToUnix(timeStart),
@@ -596,13 +598,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc active cryptocurrency markets pages like {@link https://coinmarketcap.com/currencies/bitcoin/#markets coinmarketcap.com/currencies/bitcoin/#markets}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyMarketpairsLatest | Market Pairs Latest v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyMarketpairsLatest | Market Pairs Latest v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyMarketpairsLatest | Cryptocurrency Market Pairs Latest v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyMarketpairsLatest | Cryptocurrency Market Pairs Latest v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get ethereum market pair
@@ -648,7 +650,7 @@ export class CryptoRepository extends Repository {
       ...(id?.symbol && { symbol: this.cmc.client.commaSeparate(id.symbol) }),
       ...(matched?.id && { matched_id: this.cmc.client.commaSeparate(matched.id) }),
       ...(matched?.symbol && { matched_symbol: this.cmc.client.commaSeparate(matched.symbol) }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       limit: limit,
       start: offset,
       category: category,
@@ -669,13 +671,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *No equivalent, this data is only available via API.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyOhlcvLatest | OHLCV Latest v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyOhlcvLatest | OHLCV Latest v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyOhlcvLatest | Cryptocurrency OHLCV Latest v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyOhlcvLatest | Cryptocurrency OHLCV Latest v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get btc and eth ohlcv and convert to usd and eur
@@ -708,7 +710,7 @@ export class CryptoRepository extends Repository {
     return await this.cmc.client.req<TResponse>(this.endpoints.ohlcv, {
       ...(id?.id && { id: this.cmc.client.commaSeparate(id.id) }),
       ...(id?.symbol && { symbol: this.cmc.client.commaSeparate(id.symbol) }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       skip_invalid: skipInvalid,
     });
   }
@@ -741,13 +743,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc historical cryptocurrency data pages like {@link https://coinmarketcap.com/currencies/bitcoin/historical-data/ coinmarketcap.com/currencies/bitcoin/historical-data/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyOhlcvHistorical | OHLCV Historical v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyOhlcvHistorical | OHLCV Historical v1 *(deprecated)*}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyOhlcvHistorical | Cryptocurrency OHLCV Historical v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyOhlcvHistorical | Cryptocurrency OHLCV Historical v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get ohclv history of btc and eth in range date "2024-12-01" - "2025-01-01"
@@ -798,7 +800,7 @@ export class CryptoRepository extends Repository {
       ...(id?.id && { id: this.cmc.client.commaSeparate(id.id) }),
       ...(id?.slug && { slug: this.cmc.client.commaSeparate(id.slug) }),
       ...(id?.symbol && { symbol: this.cmc.client.commaSeparate(id.symbol) }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       count: count,
       interval: interval,
       time_period: timePeriod,
@@ -822,13 +824,13 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *The statistics module displayed on cryptocurrency pages like {@link https://coinmarketcap.com/currencies/bitcoin/ | Bitcoin}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyPriceperformancestatsLatest | Price Performance Stats v2}. \
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyPriceperformancestatsLatest | Price Performance Stats v1}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV2CryptocurrencyPriceperformancestatsLatest | Cryptocurrency Price Performance Stats v2}. \
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyPriceperformancestatsLatest | Cryptocurrency Price Performance Stats v1 *(deprecated)*}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get performance of btc and eth in 24 hours and convert to the price into eur and usd
@@ -869,7 +871,7 @@ export class CryptoRepository extends Repository {
       ...(id?.id && { id: id.id }),
       ...(id?.slug && { slug: id.slug }),
       ...(id?.symbol && { symbol: id.symbol }),
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       time_period: timePeriod,
       skip_invalid: skipInvalid,
     });
@@ -885,12 +887,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Our Cryptocurrency Category page {@link https://coinmarketcap.com/cryptocurrency-category/ | coinmarketcap.com/cryptocurrency-category/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyCategory | CoinMarketCap Category}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyCategory | Cryptocurrency Category}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get zkSync category and log the market cap and the USD quote for ethereum
@@ -920,7 +922,7 @@ export class CryptoRepository extends Repository {
     convert?: CryptoConvert,
   ): Promise<TResponse> {
     return await this.cmc.client.req<TResponse>(this.endpoints.category, {
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       limit: limit,
       start: offset,
       id: id,
@@ -937,12 +939,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Our Cryptocurrency Categories page {@link https://https://coinmarketcap.com/cryptocurrency-category/ | https://coinmarketcap.com/cryptocurrency-category/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyCategories | CoinMarketCap Categories}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyCategories | Cryptocurrency Categories}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get 10 categories and get and log/grep the title of each category
@@ -984,12 +986,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc free airdrops page {@link https://coinmarketcap.com/airdrop/ | coinmarketcap.com/airdrop/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyAirdrop | CoinMarketCap Airdrop}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyAirdrop | Cryptocurrency Airdrop}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get airdrop information and log the coin of the airdrop
@@ -1017,12 +1019,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc free airdrops page {@link https://coinmarketcap.com/airdrop/ | coinmarketcap.com/airdrop/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyAirdrops | CoinMarketCap Airdrops}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyAirdrops | Cryptocurrency Airdrops}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get all upcoming airdrops and log the project name
@@ -1068,12 +1070,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *Cmc cryptocurrency Trending page {@link https://coinmarketcap.com/trending-cryptocurrencies/ | coinmarketcap.com/trending-cryptocurrencies/}.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingLatest | CoinMarketCap Trending Latest}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingLatest | Cryptocurrency Trending Latest}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get latest trending cryptocurrencies for the last 24 hours and log the name, symbol, and quotes for EUR and USD
@@ -1107,7 +1109,7 @@ export class CryptoRepository extends Repository {
     convert?: CryptoConvert,
   ): Promise<TResponse> {
     return await this.cmc.client.req<TResponse>(this.endpoints.trending, {
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       time_period: timePeriod,
       limit: limit,
       start: offset,
@@ -1123,12 +1125,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *The CoinMarketCap {@link https://coinmarketcap.com/most-viewed-pages/ | Most Visited} trending list.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingMostvisited | CoinMarketCap Trending Most Visited}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingMostvisited | Cryptocurrency Trending Most Visited}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get most visited cryptocurrencies for the last 24 hours and log the name, symbol, and quotes for EUR and USD
@@ -1162,7 +1164,7 @@ export class CryptoRepository extends Repository {
     convert?: CryptoConvert,
   ): Promise<TResponse> {
     return await this.cmc.client.req<TResponse>(this.endpoints.mostVisited, {
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       time_period: timePeriod,
       limit: limit,
       start: offset,
@@ -1178,12 +1180,12 @@ export class CryptoRepository extends Repository {
    * **CMC equivalent pages**: *The CoinMarketCap {@link https://coinmarketcap.com/gainers-losers/ | Gainers & Losers} page.*
    *
    * @see
-   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingGainerslosers | CoinMarketCap Trending Gainers & Losers}.
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1CryptocurrencyTrendingGainerslosers | Cryptocurrency Trending Gainers & Losers}.
    *
    * @example import the CoinMarketCapApi class and create a new instance
    * ```typescript
    * import { CoinMarketCapApi } from "cmc-api";
-   * const cmc = new CoinMarketCapApi(process.env.COINMARKETCAP_APIKEY);
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
    * ```
    *
    * @example get the top 10 gainers and losers for the last 24 hours and log the name, symbol, and quotes for EUR and USD
@@ -1221,7 +1223,7 @@ export class CryptoRepository extends Repository {
     sort: "percent_change_24h" = "percent_change_24h",
   ): Promise<TResponse> {
     return await this.cmc.client.req<TResponse>(this.endpoints.gainersLosers, {
-      ...(Number.isInteger(convert) ? { convert_id: convert } : { convert }),
+      ...(isNumeric(convert) ? { convert_id: convert } : { convert }),
       time_period: timePeriod,
       limit: limit,
       start: offset,
