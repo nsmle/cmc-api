@@ -102,8 +102,8 @@ export class Client {
     const data: TData = (result?.data?.data || result?.data) as TData;
 
     this.status = status;
-    if (status.error_code > 0) throw this.error(status);
-    return data;
+    if (status?.error_code > 0) throw this.error(data);
+    return (data ?? result) as TData;
   }
 
   /**
@@ -228,32 +228,32 @@ export class Client {
    *
    * If the error code does not match any of the above, a generic {@link CmcRequestError} is returned.
    */
-  private error(status: CmcStatusResponse, data?: unknown): CmcErrorClass {
-    switch (status.error_code) {
+  private error(data?: unknown): CmcErrorClass {
+    switch (this.status?.error_code) {
       case CmcErrorCode.ApikeyInvalid:
-        return new CmcInvalidError(status, data);
+        return new CmcInvalidError(this.status, data);
       case CmcErrorCode.ApikeyMissing:
-        return new CmcMissingError(status, data);
+        return new CmcMissingError(this.status, data);
       case CmcErrorCode.ApikeyPlanRequiresPayment:
-        return new CmcPaymentRequiredError(status, data);
+        return new CmcPaymentRequiredError(this.status, data);
       case CmcErrorCode.ApikeyPlanPaymentExpired:
-        return new CmcPaymentExpiredError(status, data);
+        return new CmcPaymentExpiredError(this.status, data);
       case CmcErrorCode.ApikeyRequired:
-        return new CmcApikeyRequiredError(status, data);
+        return new CmcApikeyRequiredError(this.status, data);
       case CmcErrorCode.ApikeyPlanNotAuthorized:
-        return new CmcPlanUnauthorizeError(status, data);
+        return new CmcPlanUnauthorizeError(this.status, data);
       case CmcErrorCode.ApikeyDisable:
-        return new CmcApikeyDisabledError(status, data);
+        return new CmcApikeyDisabledError(this.status, data);
       case CmcErrorCode.ApikeyPlanMinuteRateLimitReached:
-        return new CmcMinuteRateLimitError(status, data);
+        return new CmcMinuteRateLimitError(this.status, data);
       case CmcErrorCode.ApikeyPlanDailyRateLimitReached:
-        return new CmcDailyRateLimitError(status, data);
+        return new CmcDailyRateLimitError(this.status, data);
       case CmcErrorCode.ApikeyPlanMonthlyRateLimitReached:
-        return new CmcMonthlyRateLimitError(status, data);
+        return new CmcMonthlyRateLimitError(this.status, data);
       case CmcErrorCode.IpRateLimitReached:
-        return new CmcIpRateLimitError(status, data);
+        return new CmcIpRateLimitError(this.status, data);
     }
 
-    return new CmcRequestError(status, data);
+    return new CmcRequestError(this.status, data);
   }
 }

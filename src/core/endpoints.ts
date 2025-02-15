@@ -46,9 +46,9 @@ const crypto = {
 /**
  * Various endpoints for decentralized exchange (DEX) data.
  *
+ * @property {string} map - Endpoint for retrieving all networks on CoinMarketCap (CMC).
  * @property {string} listings - Endpoint for the latest listings of DEXes.
  * @property {string} metadata - Endpoint for metadata of DEXes.
- * @property {string} networks - Endpoint for retrieving all networks on CoinMarketCap (CMC).
  * @property {string} pairs - Endpoint for the latest listings of trading pairs.
  * @property {string} quotes - Endpoint for the latest quotes of trading pairs.
  * @property {string} ohlcv - Endpoint for the latest OHLCV (Open, High, Low, Close, Volume) quotes.
@@ -56,9 +56,9 @@ const crypto = {
  * @property {string} trades - Endpoint for the latest 100 trades.
  */
 const dex = {
+  map: "/v4/dex/networks/list",
   listings: "/v4/dex/listings/quotes",
   metadata: "/v4/dex/listings/info",
-  networks: "/v4/dex/networks/list",
   pairs: "/v4/dex/spot-pairs/latest",
   quotes: "/v4/dex/pairs/quotes/latest",
   ohlcv: "/v4/dex/pairs/ohlcv/latest",
