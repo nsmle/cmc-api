@@ -51,6 +51,14 @@ export class Client {
   public status: CmcStatusResponse;
 
   /**
+   * Callback function to handle errors that occur during a request.
+   *
+   * @param request - The URL of the request that caused the error.
+   * @param response - The response object associated with the error.
+   */
+  public onError: (request: URL, response: unknown) => void;
+
+  /**
    * The API key used for accessing the sandbox environment of the service.
    * This key is intended for testing purposes and should not be used in production.
    *
@@ -92,16 +100,16 @@ export class Client {
     query?: TQuery,
     headers?: Pair<string, string>,
   ): Promise<TData> {
-    const request = await fetch(this.genUri(endpoint, query), {
-      method: "GET",
-      headers: this.genHeaders(headers),
-    });
+    const uri = this.genUri(endpoint, query);
+    const requestInit = { method: "GET", headers: this.genHeaders(headers) };
+    const request = await fetch(uri, requestInit);
 
     const result: CmcBaseResponse<TData> = await request.json();
     const status: CmcStatusResponse = result?.data?.status || result?.status;
     const data: TData = (result?.data?.data || result?.data) as TData;
 
     this.status = status;
+    if (this.onError && (!status || status?.error_code > 0)) this.onError(uri, result);
     if (status?.error_code > 0) throw this.error(data);
     return (data ?? result) as TData;
   }
