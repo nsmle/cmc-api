@@ -1,6 +1,6 @@
 {
   "name": "cmc-api",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "CoinMarketCap RESTful API Wrapper",
   "keywords": [
     "coinmarketcap",

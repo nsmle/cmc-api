@@ -39,7 +39,7 @@ export default tsEslint.config(
           printWidth: 120,
           endOfLine: "crlf",
           bracketSpacing: true,
-          quoteProps: "consistent",
+          quoteProps: "as-needed",
           arrowParens: "always",
           parser: "typescript",
         },
