@@ -1,6 +1,6 @@
 # CoinMarketCap NodeJS Api wrapper
 
-The **cmc-api** is an generic api wrapper for [CoinMarketCap](https://coinmarketcap.com).
+The **[cmc-api](https://www.npmjs.com/package/cmc-api)** is an generic api wrapper for [CoinMarketCap](https://coinmarketcap.com).
 Supports endpoints cryptocurrency, exchanges (CEX), decentralized exchange (DEX), global metrics, community content and trends, tools and others.
 
 > [!IMPORTANT]  
@@ -63,7 +63,7 @@ const cmc = new CoinMarketCapApi(CMC_APIKEY);
 
 ### Cryptocurrency
 
-#### CoinMarketCap ID map
+#### Cryptocurrency ID Map
 ```typescript
 const crypto = await cmc.crypto.list('active', 'id', 10, 1, ['BTC', 'ETH']);
 const btc = crypto.find((crypto): boolean => crypto.symbol === 'BTC');
@@ -92,21 +92,21 @@ const crypto = await cmc.crypto.metadata<'1027'>({ contract: '0xeeeeeeeeeeeeeeee
 console.log(crypto[1027]); // Ethereum
 ```
 
-#### Latest Listings
+#### Listings Latest
 ###### get cryptocurrency latest listings
 ```typescript
 const crypto = await cmc.crypto.listing<'USD' | 'EUR'>(10, 1, 'all', 'market_cap', 'desc', 'all', undefined, ['USD', 'EUR']);
 console.log(crypto.at(0), crypto.at(0).quote.USD, crypto.at(0).quote.EUR);
 ```
 
-#### New Listings
+#### Listings New
 ###### get cryptocurrency new listings and convert to BTC and ETH
 ```typescript
 const crypto = await cmc.crypto.listingNew<'BTC' | 'ETH'>(10, 1, 'desc', ['BTC', 'ETH']);
 console.log(crypto, crypto.at(0).quote.BTC, crypto.at(0).quote.ETH);
 ```
 
-#### Historical Listings
+#### Listings Historical
 ###### get cryptocurrency historical listings
 ```typescript
 const date = new Date()
@@ -114,14 +114,14 @@ const crypto = await cmc.crypto.listingHistory<'BTC' | 'ETH' | 'USD'>(date, 10, 
 console.log(crypto, crypto.at(0).quote.BTC, crypto.at(0).quote.ETH,  crypto.at(0).quote.USD);
 ```
 
-#### Latest Quotes
+#### Quotes Latest
 ###### get cryptocurrency latest quotes by slug coin/token
 ```typescript
 const quotes = await cmc.crypto.quotes<'bitcoin' | 'ethereum', 'USD' | 'EUR'>({ slug: ['bitcoin', 'ethereum'] }, ['USD', 'EUR']);
 console.log({ btc: quotes.bitcoin, eth: quotes.ethereum, btcUsd: quotes.bitcoin.quote.USD, ethEur: quotes.ethereum.quote.EUR });
 ```
 
-#### Historical Quotes
+#### Quotes Historical
 ###### get btc and eth historical quotes in range '2024-12-01' - '2025-01-01'
 ```typescript
 const start = new Date('2024-12-01T00:00:00Z');
@@ -133,14 +133,14 @@ console.log({ btcQuotes: btc.quotes, ethQuotes: eth.quotes });
 console.log({ btcQuoteFirst: btc.quotes?.at(0)?.quote, ethQuoteFirst: eth.quotes?.at(0)?.quote });
 ```
 
-#### Latest Market Pairs
+#### Market Pairs Latest
 ###### get ethereum market pairs
 ```typescript
 const ethereum = await cmc.crypto.marketPairs<'USD' | 'BTC'>({ slug: 'ethereum' }, { symbol: ['USD', 'BTC'] });
 console.log({ ethMarketPairs: ethereum.market_pairs });
 ```
 
-#### Latest OHLCV 
+#### OHLCV Latest
 ###### get latest btc and eth ohlcv and convert to usd and eur
 ```typescript
 const ohlcv = await cmc.crypto.ohlcv<'1' | '1027', 'USD' | 'EUR'>({ id: [1, 1027] }, ['USD', 'EUR']);
@@ -151,7 +151,7 @@ console.log({ btcOhlcv, ethOhlcv });
 console.log({ btcOhlcvUsd: btcOhlcv.quote.USD, ethOhlcvEur: ethOhlcv.quote.EUR });
 ```
 
-#### Historical OHLCV 
+#### OHLCV Historical
 ###### get ohclv history of btc and eth in range date '2024-12-01' - '2025-01-01'
 ```typescript
 const start = new Date('2024-12-01T00:00:00Z');
@@ -261,7 +261,7 @@ for (const trending of trendings) {
 
 ### Exchanges _(CEX)_
 
-#### ID Map
+#### Exchanges ID Map
 ###### get a list of all active exchanges
 ```typescript
 import type { CexIdMapResponses } from "cmc-api";
@@ -320,7 +320,7 @@ const marketPairs = await cmc.cex.marketPairs<"binance">({ slug: "binance" });
 console.log(marketPairs.binance);
 ```
 
-#### Latest Quotes
+#### Quotes Latest
 ###### get latest binance quotes by id for BTC and ETH
 ```typescript
 const quotes = await cmc.cex.quotes<"3673", "BTC" | "ETH">({ id: 3673 }, ["BTC", "ETH"]);
@@ -332,7 +332,7 @@ const quotes = await cmc.cex.quotes<"binance", "BTC" | "ETH">({ slug: "binance" 
 console.log(quotes.binance.quote.BTC.volume_24h, quotes.binance.quote.ETH.volume_24h);
 ```
 
-#### Historical Quotes
+#### Quotes Historical
 ###### get binance historical quotes by exchange slug in interval 4h and convert to BTC and ETH
 ```typescript
 const start = new Date("2024-12-01T00:00:00Z");
@@ -350,7 +350,119 @@ for (const binanceQuote of quotesHistorical.binance.quotes) {
 ```
 
 ### Decentralized Exchange _(DEX)_
-**(_soon_)**
+
+#### DEX ID Map
+###### get 500 list of dex networks
+```typescript
+import type { DexIdMapResponse } from "cmc-api";
+const dexes = await cmc.dex.list<DexIdMapResponse>(500, 1, "id", "desc", ["alternativeName", "cryptocurrencyId", "cryptocurrenySlug"]);
+for (const dex of dexes) {
+  console.log(dex.id, dex.name, dex.network_slug);
+}
+```
+
+#### Metadata
+###### get metadata for a list of DEX
+```typescript
+import type { DexMetadataResponse } from "cmc-api";
+const metadata = await cmc.dex.metadata<DexMetadataResponse>([51, 60, 68, 93, 118], ["urls", "logo"]);
+console.log(metadata);
+```
+
+#### Listings
+###### get 10 list swap of DEX listings and sorted by volume_24h
+```typescript
+import type { DexListingQuote, DexListingResponse } from "cmc-api";
+const listings = await cmc.dex.listing<DexListingQuote, DexListingResponse>("swap", 10, 1, "volume_24h");
+for (const listing of listings) {
+  console.log(listing);
+}
+```
+
+#### Quotes
+###### get quotes of "WETH/USDT" by contract address in ethereum network by id
+```typescript
+import type { DexQuote, DexSecurityScan } from "cmc-api";
+const quotes = await cmc.dex.quotes<DexQuote, DexSecurityScan>("0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b", { id: 1 });  // "WETH/USDT"
+console.log(quotes);
+```
+###### get quotes of "SOL/WETH" by contract address in ethereum network by slug
+```typescript
+import type { DexQuote, DexSecurityScan } from "cmc-api";
+const quotes = await cmc.dex.quotes<DexQuote, DexSecurityScan>("0x127452f3f9cdc0389b0bf59ce6131aa3bd763598", { slug: "ethereum" });  // "SOL/WETH"
+console.log(quotes);
+```
+
+#### Trades
+###### get latest trades of "WETH/USDT" by contract address in ethereum network by id
+```typescript
+const latestTrades = await cmc.dex.trades("0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b", { id: 1 });  // "WETH/USDT"
+for (const token of latestTrades) {
+  for (const trade of token.trades) console.log(trade);
+}
+```
+###### get latest trades of "SOL/WETH" by contract address in ethereum network by slug
+```typescript
+const latestTrades = await cmc.dex.trades("0x127452f3f9cdc0389b0bf59ce6131aa3bd763598", { slug: "ethereum" }); // "SOL/WETH"
+for (const token of latestTrades) {
+  for (const trade of token.trades) console.log(trade);
+}
+```
+
+#### Pairs Listings
+###### importing type of dex pairs response
+```typescript
+import type { DexPairQuote, DexSecurityScan } from "cmc-api";
+```
+###### get list of all active dex spot pairs by network id
+```typescript
+const pairs = await cmc.dex.pairs<DexPairQuote, DexSecurityScan>({ id: 1 });  // networkId '1' == slug 'ethereum'
+for (const pair of pairs) console.log(pair);
+```
+###### get list of all active dex spot pairs by network slug
+```typescript
+const pairs = await cmc.dex.pairs<DexPairQuote, DexSecurityScan>({ slug: "ethereum" });  // ethereum
+for (const pair of pairs) console.log(pair);
+```
+###### get list of all active dex spot pairs by network id and dex id
+```typescript
+const pairs = await cmc.dex.pairs<DexPairQuote, DexSecurityScan>({ id: 1 }, { id: 1348 });  // networkId 1 = ethereum | dexId 1348 = "uniswap-v3"
+for (const pair of pairs) console.log(pair);
+```
+###### get list of all active dex spot pairs by network slug and dex slug
+```typescript
+const pairs = await cmc.dex.pairs<DexPairQuote, DexSecurityScan>({ slug: "ethereum" }, { slug: "uniswap-v3" });  // ethereum | uniswap-v3
+for (const pair of pairs) console.log(pair);
+```
+
+#### OHLCV Latest
+###### get the latest OHLCV data by contract address and network id
+```typescript
+import type { DexOhlcvQuote, DexSecurityScan } from "cmc-api";
+const ohlcvs = await cmc.dex.ohlcv<DexOhlcvQuote, DexSecurityScan>("0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b", { id: 1 }); // "WETH/USDT"
+for (const ohlcv of ohlcvs) console.log(ohlcv);
+```
+###### get the latest OHLCV data by contract address and network slug
+```typescript
+import type { DexOhlcvQuote, DexSecurityScan } from "cmc-api";
+const ohlcvs = await cmc.dex.ohlcv<DexOhlcvQuote, DexSecurityScan>("0x127452f3f9cdc0389b0bf59ce6131aa3bd763598", { slug: "ethereum" }); // "SOL/WETH"
+for (const ohlcv of ohlcvs) console.log(ohlcv);
+```
+
+#### OHLCV Historical
+
+###### get historical OHLCV data on daily interval and period by contract address and network id
+```typescript
+import type { DexOhlcvHistoricalQuotes, DexSecurityScan } from "cmc-api";
+const ohlcvsHistories = await cmc.dex.ohlcvHistory<DexOhlcvHistoricalQuotes, DexSecurityScan>("0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b", { id: 1 }); // USDT/WETH in uniswap-v3 DEX
+for (const ohlcvHistory of ohlcvsHistories) console.log(ohlcvHistory);
+```
+###### get historical OHLCV data on daily interval and period by contract address and network slug
+```typescript
+import type { DexOhlcvHistoricalQuotes, DexSecurityScan } from "cmc-api";
+const ohlcvsHistories = await cmc.dex.ohlcvHistory<DexOhlcvHistoricalQuotes, DexSecurityScan>("0x127452f3f9cdc0389b0bf59ce6131aa3bd763598", { slug: "ethereum" }); // SOL/WETH in uniswap-v3 DEX
+for (const ohlcvHistory of ohlcvsHistories) console.log(ohlcvHistory);
+```
 
 ### Global Metrics
 **(_soon_)**

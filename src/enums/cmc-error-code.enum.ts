@@ -12,7 +12,7 @@ export enum CmcErrorCode {
 
   /**
    * Your API Key must be activated.
-   * Please go to {@link pro.coinmarketcap.com/account/plan | account Plan}
+   * Please go to {@link https://pro.coinmarketcap.com/account/plan | CoinMarketCap Account Plan}
    */
   ApikeyPlanRequiresPayment = 1003,
 
