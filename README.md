@@ -41,7 +41,7 @@ import { CoinMarketCapApi } from 'cmc-api';
 ```
 ###### Node.js:
 ```typescript
-const CoinMarketCapApi = require('cmc-api');
+const CoinMarketCapApi = require('cmc-api').default;
 // or 
 const { CoinMarketCapApi } = require('cmc-api');
 ```
@@ -56,7 +56,7 @@ const cmc = CoinMarketCapApi.sandbox();
 ###### Using production CMC ApiKey
 ```typescript
 import CoinMarketCapApi from 'cmc-api';
-const CMC_APIKEY = 'YOUR_COINMARKETCAP_APIKEY'; // process.env.COINMARKETCAP_APIKEY
+const CMC_APIKEY = 'YOUR_COINMARKETCAP_APIKEY'; // e.g: "dfa3195f-f1d4-f1c1-a1fa-83461b5f42eb"
 const cmc = new CoinMarketCapApi(CMC_APIKEY);
 ```
 

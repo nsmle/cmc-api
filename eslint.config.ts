@@ -58,8 +58,8 @@ export default tsEslint.config(
     },
     plugins: {
       "typescript-eslint": tsPlugin,
-      "prettier": prettierPlugin,
-      "import": importPlugin,
+      prettier: prettierPlugin,
+      import: importPlugin,
     },
     rules: {
       "@typescript-eslint/no-unused-vars": "error",
@@ -78,8 +78,8 @@ export default tsEslint.config(
       "import/order": [
         "error",
         {
-          "groups": [["builtin", "external"], ["internal", "parent", "sibling", "index"], ["type"]],
-          "pathGroups": [
+          groups: [["builtin", "external"], ["internal", "parent", "sibling", "index"], ["type"]],
+          pathGroups: [
             {
               pattern: "@option/**",
               group: "internal",
@@ -101,8 +101,8 @@ export default tsEslint.config(
               position: "before",
             },
           ],
-          "pathGroupsExcludedImportTypes": ["type"],
-          "alphabetize": {
+          pathGroupsExcludedImportTypes: ["type"],
+          alphabetize: {
             order: "asc",
             caseInsensitive: true,
           },
@@ -122,7 +122,7 @@ export default tsEslint.config(
     files: ["**/*.{json}", "**/*.config.ts"],
     plugins: {
       "typescript-eslint": tsPlugin,
-      "prettier": prettierPlugin,
+      prettier: prettierPlugin,
     },
     extends: [tsEslint.configs.disableTypeChecked],
   },
