@@ -4,7 +4,7 @@ import { compilerOptions } from "./tsconfig.json";
 
 export default async (): Promise<Config> => ({
   verbose: true,
-  testMatch: ["**/tests/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
+  testMatch: ["**/tests/**/?(*.)+(spec|test).[tj]s?(x)", "**/?(*.)+(spec|test).[tj]s?(x)"],
   preset: "ts-jest",
   testEnvironment: "node",
   moduleDirectories: ["node_modules", "<rootDir>"],
