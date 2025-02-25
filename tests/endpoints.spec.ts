@@ -62,7 +62,7 @@ describe("Endpoints", (): void => {
   describe("Dexes", (): void => {
     test("Listings", (): void => expect("/v4/dex/listings/quotes").toBe(endpoints.dex.listings));
     test("Metadata", (): void => expect("/v4/dex/listings/info").toBe(endpoints.dex.metadata));
-    test("Networks", (): void => expect("/v4/dex/networks/list").toBe(endpoints.dex.networks));
+    test("Networks", (): void => expect("/v4/dex/networks/list").toBe(endpoints.dex.map));
     test("Pairs", (): void => expect("/v4/dex/spot-pairs/latest").toBe(endpoints.dex.pairs));
     test("Quotes", (): void => expect("/v4/dex/pairs/quotes/latest").toBe(endpoints.dex.quotes));
     test("OHLCV Latest", (): void => expect("/v4/dex/pairs/ohlcv/latest").toBe(endpoints.dex.ohlcv));
@@ -113,5 +113,7 @@ describe("Endpoints", (): void => {
       expect(getEndpoint(item, "CoinMarketCap ID Map", "fiat")).toBe(endpoints.misc.fiat));
     test("Price Conversion", (): void =>
       expect(getEndpoint(item, "Price Conversion v2", "tools")).toBe(endpoints.misc.priceConversion));
+    test("ApiKey Usage Stats", (): void =>
+      expect(getEndpoint(item, "Key Info", "key")).toBe(endpoints.misc.usageStats));
   });
 });

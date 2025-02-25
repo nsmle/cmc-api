@@ -130,10 +130,12 @@ const community = {
  *
  * @property {string} fiat - Endpoint for retrieving the list of fiat currencies.
  * @property {string} priceConversion - Endpoint for the price conversion tool.
+ * @property {string} usageStats - Endpoint for the usage statistics of the API key.
  */
 const misc = {
   fiat: "/v1/fiat/map",
   priceConversion: "/v2/tools/price-conversion",
+  usageStats: "/v1/key/info",
 };
 
 /**
