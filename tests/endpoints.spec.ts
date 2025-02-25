@@ -84,7 +84,7 @@ describe("Endpoints", (): void => {
   describe("Metrics", (): void => {
     const m = (name: string): string => getEndpoint(item, name, "global-metrics");
     const f = (name: string): string => getEndpoint(item, name, "fear-and-greed");
-
+    const b = (name: string): string => getEndpoint(item, name, "blockchain");
     test("Quotes Latest", (): void => expect(m("Quotes Latest")).toBe(endpoints.metric.quotes));
     test("Quotes Historical", (): void => expect(m("Quotes Historical")).toBe(endpoints.metric.quotesHistorical));
     test("CMC100 Latest", (): void => expect("/v3/index/cmc100-latest").toBe(endpoints.metric.index));
@@ -93,6 +93,8 @@ describe("Endpoints", (): void => {
       expect(f("CMC Crypto Fear and Greed Latest")).toBe(endpoints.metric.fearAndGreed));
     test("Fear and Greed Historical", (): void =>
       expect(f("CMC Crypto Fear and Greed Historical")).toBe(endpoints.metric.fearAndGreedHistorical));
+    test("Blockchain Statistics Latest", (): void =>
+      expect(b("Statistics Latest")).toBe(endpoints.metric.blockchainStats));
   });
 
   describe("Community", (): void => {
@@ -108,7 +110,7 @@ describe("Endpoints", (): void => {
       expect(c("Community Trending Tokens")).toBe(endpoints.community.trendingToken));
   });
 
-  describe("Tools", (): void => {
+  describe("Tools & Miscellaneous", (): void => {
     test("Fiat Currencies", (): void =>
       expect(getEndpoint(item, "CoinMarketCap ID Map", "fiat")).toBe(endpoints.misc.fiat));
     test("Price Conversion", (): void =>
