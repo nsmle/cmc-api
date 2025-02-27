@@ -11,6 +11,7 @@ import { CmcIpRateLimitError } from "@error/cmc-rate-limit-ip.error";
 import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
 import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
 import { CmcRequestError } from "@error/cmc-request.error";
+import { Enumerable } from "@util/decorators.util";
 import type { Pair } from "@option/common.type";
 import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@response/status.response";
 
@@ -36,14 +37,17 @@ export class Client {
   /**
    * The base URL for the API client.
    * This URL is used as the root for all API requests made by the client.
+   * @internal @private
    */
+  @Enumerable(false)
   private baseURL: string;
 
   /**
    * The API key used for authenticating requests to the service.
-   * @protected
+   * @internal @private
    */
-  protected apikey: string;
+  @Enumerable(false)
+  private apikey: string;
 
   /**
    * Represents the status of the CMC response.
@@ -61,14 +65,14 @@ export class Client {
   /**
    * The API key used for accessing the sandbox environment of the service.
    * This key is intended for testing purposes and should not be used in production.
-   *
+   * @internal @private
    * @constant {string}
    */
   private static readonly SandboxApikey = "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c";
 
   /**
    * A collection of base URLs for the CoinMarketCap API.
-   * @readonly
+   * @readonly @internal @private
    * @see {@link https://pro.coinmarketcap.com/api/v1#section/Quick-Start-Guide | Quick Start Guide}
    */
   private static readonly BaseURL = {

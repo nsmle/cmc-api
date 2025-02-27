@@ -1,6 +1,7 @@
 import endpoints from "@core/endpoints";
 import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
+import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
 import type { Interval, ListingStatus, Pair } from "@option/common.type";
 import type {
@@ -59,7 +60,11 @@ import type {
 } from "@response/crypto.response";
 
 export class CryptoRepository extends Repository {
-  /** @private Endpoints are used to interact with CoinMarketCap Exchange APIs */
+  /**
+   * Endpoints are used to interact with CoinMarketCap Exchange APIs
+   * @internal @private
+   */
+  @Enumerable(false)
   private endpoints = endpoints.crypto;
 
   /**

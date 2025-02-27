@@ -1,6 +1,7 @@
 import endpoints from "@core/endpoints";
 import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
+import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
 import type {
   AuxiliaryCexList,
@@ -35,7 +36,11 @@ import type {
 } from "@response/cex.response";
 
 export class CexRepository extends Repository {
-  /** @private Endpoints are used to interact with CoinMarketCap Exchange APIs. */
+  /**
+   * Endpoints are used to interact with CoinMarketCap Exchange APIs.
+   * @internal @private
+   */
+  @Enumerable(false)
   private endpoints = endpoints.cex;
 
   /**

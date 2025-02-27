@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "removeComments": false,
+    "stripInternal": true,
     "noLib": false,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,

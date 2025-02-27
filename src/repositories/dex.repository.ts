@@ -1,6 +1,7 @@
 import endpoints from "@core/endpoints";
 import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
+import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
 import type { Convert, SortDir } from "@option/common.type";
 import type {
@@ -43,7 +44,11 @@ import type {
 } from "@response/dex.response";
 
 export class DexRepository extends Repository {
-  /** @private Endpoints are used to interact with CoinMarketCap Decentralized Exchange APIs */
+  /**
+   * Endpoints are used to interact with CoinMarketCap Decentralized Exchange APIs
+   * @internal @private
+   */
+  @Enumerable(false)
   private endpoints = endpoints.dex;
 
   /**
