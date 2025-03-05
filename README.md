@@ -450,7 +450,6 @@ for (const ohlcv of ohlcvs) console.log(ohlcv);
 ```
 
 #### OHLCV Historical
-
 ###### get historical OHLCV data on daily interval and period by contract address and network id
 ```typescript
 import type { DexOhlcvHistoricalQuotes, DexSecurityScan } from "cmc-api";
@@ -465,7 +464,84 @@ for (const ohlcvHistory of ohlcvsHistories) console.log(ohlcvHistory);
 ```
 
 ### Global Metrics
-**(_soon_)**
+
+#### Global Quotes Latest
+###### get global quotes and convert the quote to "EUR" and "USD"
+```typescript
+const globalQuotes = await cmc.metric.quotes<"EUR" | "USD">(["EUR", "USD"]);
+console.log(globalQuotes.quote.EUR, globalQuotes.quote.USD);
+```
+###### get global quotes and convert the quote to "BTC" and "ETH"
+```typescript
+const globalQuotes = await cmc.metric.quotes<"BTC" | "ETH">(["BTC", "ETH"]);
+console.log(globalQuotes.quote.BTC, globalQuotes.quote.ETH);
+```
+
+#### Global Quotes Historical
+###### get global quotes in range "2024-12-01" - "2025-01-01" and convert to "BTC" and "ETH"
+```typescript
+const start = new Date("2024-12-01T00:00:00Z");
+const end = new Date("2025-01-01T00:00:00Z");
+
+const globalQuotesHistorical = await cmc.metric.quotesHistorical<"BTC" | "ETH">(start, end, 10, "1d", ["BTC", "ETH"]);
+for (const quotes of globalQuotesHistorical.quotes) console.log(quotes.quote.BTC, quotes.quote.ETH);
+```
+
+#### CMC100 Index Latest
+###### get latest CoinMarketCap 100 index
+```typescript
+import type { Metric100IndexConstituents, Metric100IndexLatestResponse } from "cmc-api";
+
+const index100Latest = await cmc.metric.index<Metric100IndexConstituents, Metric100IndexLatestResponse<Metric100IndexConstituents>>();
+for (const constituents of index100Latest.constituents) console.log(constituents.name, constituents.weight);
+console.log(index100Latest.value_24h_percentage_change);
+```
+
+#### CMC100 Index Historical
+###### get historical CoinMarketCap 100 index
+```typescript
+import type { Metric100IndexConstituents, Metric100IndexHistoricalResponse } from "cmc-api";
+
+const start = new Date("2024-12-01T00:00:00Z");
+const end = new Date("2025-01-01T00:00:00Z");
+const index100Historical = await cmc.metric.indexHistorical<Metric100IndexConstituents, Metric100IndexHistoricalResponse<Metric100IndexConstituents>>(start, end);
+for (const index100 of index100Historical) console.log(index100.value, index100.constituents);
+```
+
+#### Fear and Greed Latest
+###### get latest Fear and Greed
+```typescript
+import type { MetricFearAndGreedLatest } from "cmc-api";
+
+const fearAndGreedLatest = await cmc.metric.fearAndGreed<MetricFearAndGreedLatest>();
+console.log(fearAndGreedLatest);
+```
+
+#### Fear and Greed Historical
+###### get historical Fear and Greed
+```typescript
+import type { MetricFearAndGreedHistorical } from "cmc-api";
+   
+const fearAndGreedHistorical = await cmc.metric.fearAndGreedHistorical<MetricFearAndGreedHistorical[]>();
+for (const fearAndGreed of fearAndGreedHistorical) console.log(fearAndGreed);
+```
+
+#### Blockchain Statistics
+###### get blockchain statistics by id
+```typescript
+const blockchainStats = await cmc.metric.stats<"1" | "2" | "1027">({ id: [1, 2, 1027] });
+console.log(blockchainStats[1], blockchainStats[2], blockchainStats[1027]);
+```
+###### get blockchain statistics by symbol
+```typescript
+const blockchainStats = await cmc.metric.stats<"BTC" | "LTC" | "ETH">({ symbol: ["BTC", "LTC", "ETH"] });
+console.log(blockchainStats.BTC, blockchainStats.LTC, blockchainStats.ETH);
+```
+###### get blockchain statistics by slug
+```typescript
+const blockchainStats = await cmc.metric.stats<"bitcoin" | "litecoin" | "ethereum">({ slug: ["bitcoin", "litecoin", "ethereum"] });
+console.log(blockchainStats.bitcoin, blockchainStats.ethereum, blockchainStats.litecoin);
+```
 
 ### Community Content and Trends
 **(_soon_)**

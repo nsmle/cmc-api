@@ -6,6 +6,7 @@ export * from "@option/cex.option";
 export * from "@option/common.type";
 export * from "@option/crypto.options";
 export * from "@option/dex.option";
+export * from "@option/metric.option";
 
 export * from "@repository/cex.repository";
 export * from "@repository/community.repository";
@@ -18,6 +19,7 @@ export * from "@response/cex.response";
 export * from "@response/common.response";
 export * from "@response/crypto.response";
 export * from "@response/dex.response";
+export * from "@response/metric.response";
 export * from "@response/status.response";
 
 export * from "@error/cmc-apikey-disabled.error";
