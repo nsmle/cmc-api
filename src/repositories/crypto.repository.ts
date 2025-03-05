@@ -29,7 +29,7 @@ import type {
   MarketPairSort,
   Matched,
   PerformanceStatsTimePeriod,
-} from "@option/crypto.options";
+} from "@option/crypto.option";
 import type { Quote } from "@response/common.response";
 import type {
   CryptoAirdropResponse,

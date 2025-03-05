@@ -4,7 +4,7 @@ export * from "@core/api";
 
 export * from "@option/cex.option";
 export * from "@option/common.type";
-export * from "@option/crypto.options";
+export * from "@option/crypto.option";
 export * from "@option/dex.option";
 export * from "@option/metric.option";
 
