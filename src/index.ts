@@ -4,6 +4,7 @@ export * from "@core/api";
 
 export * from "@option/cex.option";
 export * from "@option/common.type";
+export * from "@option/community.option";
 export * from "@option/crypto.option";
 export * from "@option/dex.option";
 export * from "@option/metric.option";
@@ -17,6 +18,7 @@ export * from "@repository/misc.repository";
 
 export * from "@response/cex.response";
 export * from "@response/common.response";
+export * from "@response/community.response";
 export * from "@response/crypto.response";
 export * from "@response/dex.response";
 export * from "@response/metric.response";

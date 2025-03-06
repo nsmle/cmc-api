@@ -64,6 +64,7 @@ const cmc = new CoinMarketCapApi(CMC_APIKEY);
 ### Cryptocurrency
 
 #### Cryptocurrency ID Map
+###### get list of cryptocurrencies
 ```typescript
 const crypto = await cmc.crypto.list('active', 'id', 10, 1, ['BTC', 'ETH']);
 const btc = crypto.find((crypto): boolean => crypto.symbol === 'BTC');
@@ -349,6 +350,7 @@ for (const binanceQuote of quotesHistorical.binance.quotes) {
 }
 ```
 
+
 ### Decentralized Exchange _(DEX)_
 
 #### DEX ID Map
@@ -463,6 +465,7 @@ const ohlcvsHistories = await cmc.dex.ohlcvHistory<DexOhlcvHistoricalQuotes, Dex
 for (const ohlcvHistory of ohlcvsHistories) console.log(ohlcvHistory);
 ```
 
+
 ### Global Metrics
 
 #### Global Quotes Latest
@@ -543,8 +546,79 @@ const blockchainStats = await cmc.metric.stats<"bitcoin" | "litecoin" | "ethereu
 console.log(blockchainStats.bitcoin, blockchainStats.ethereum, blockchainStats.litecoin);
 ```
 
+
 ### Community Content and Trends
-**(_soon_)**
+
+#### News/Headlines
+###### get list of latest community news
+```typescript
+import type { CommunityNews, CommunityNewsAsset } from "cmc-api";
+
+const news = await cmc.community.news<CommunityNews<CommunityNewsAsset>[]>();
+for (const content of news) console.log(content);
+```
+
+#### Posts Latest
+###### get latest posts by crypto id
+```typescript
+const posts = await cmc.community.posts<"1">({ id: 1 });
+for (const post of posts[1].list) console.log(post);
+```
+###### get latest posts by crypto symbol
+```typescript
+const posts = await cmc.community.posts<"BTC">({ symbol: "BTC" });
+for (const post of posts.BTC.list) console.log(post);
+```
+###### get latest posts by crypto slug
+```typescript
+const posts = await cmc.community.posts<"bitcoin">({ slug: "bitcoin" });
+for (const post of posts.bitcoin.list) console.log(post);
+```
+
+#### Posts Top
+###### get top posts by crypto id
+```typescript
+const posts = await cmc.community.topPosts<"1">({ id: 1 });
+for (const post of posts[1].list) console.log(post);
+```
+###### get top posts by crypto symbol
+```typescript
+const posts = await cmc.community.topPosts<"BTC">({ symbol: "BTC" });
+for (const post of posts.BTC.list) console.log(post);
+```
+###### get top posts by crypto slug
+```typescript
+const posts = await cmc.community.topPosts<"bitcoin">({ slug: "bitcoin" });
+for (const post of posts.bitcoin.list) console.log(post);
+```
+
+#### Post Comments
+###### get comments for a post
+```typescript
+import type { CommunityComment } from "cmc-api";
+
+const comments = await cmc.community.comments<CommunityComment[]>(325670123);
+for (const comment of comments) console.log(comment.text_content);
+```
+
+#### Trending Topics
+###### get the latest trending topics
+```typescript
+import type { CommunityTrendingTopic } from "cmc-api";
+
+const trendingTopics = await cmc.community.trendingTopic<CommunityTrendingTopic[]>(5);
+for (const trendingTopic of trendingTopics) console.log(trendingTopic);
+```
+
+#### Trending Tokens
+###### get the latest trending tokens
+```typescript
+import type { CommunityTrendingToken } from "cmc-api";
+
+const trendingTokens = await cmc.community.trendingToken<CommunityTrendingToken[]>(5);
+for (const trendingToken of trendingTokens) console.log(trendingToken);
+```
+
 
 ### Tools and Others
 **(_soon_)**
@@ -557,4 +631,4 @@ See [Releases](https://github.com/nsmle/cmc-api/releases) for more information w
 Contributions of any kind are welcome! See [here](https://github.com/nsmle/cmc-api/blob/main/.github/CONTRIBUTING.md)
 
 ## License
-Licensed under the terms of the [MIT license](https://github.com/nsmle/cmc-api/?tab=MIT-1-ov-file).
+Licensed under the [MIT](https://github.com/nsmle/cmc-api/?tab=MIT-1-ov-file) license.
