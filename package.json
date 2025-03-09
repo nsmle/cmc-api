@@ -1,7 +1,7 @@
 {
   "name": "cmc-api",
-  "version": "1.0.2",
-  "description": "CoinMarketCap RESTful API Wrapper",
+  "version": "1.0.3",
+  "description": "CoinMarketCap RESTful API Wrapper. Supports endpoints cryptocurrency, exchanges (CEX), decentralized exchange (DEX), global metrics, community content and trends, tools and others.",
   "keywords": [
     "coinmarketcap",
     "coinmarketcap-api",

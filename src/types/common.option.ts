@@ -2,6 +2,21 @@ export type UnixEpoch = number;
 export type Iso8601 = string;
 export type Timestamp = string;
 
+export type Convert = number | string | number[] | string[];
+export type SortDir = "asc" | "desc";
+
+/**
+ * Represents the listing status of a cryptocurrency.
+ *
+ * The status can be one of the following string values:
+ * - `active`: The cryptocurrency is currently active.
+ * - `inactive`: The cryptocurrency is currently inactive.
+ * - `untracked`: The cryptocurrency is not being tracked.
+ *
+ * Alternatively, it can be an array of these string values.
+ */
+export type ListingStatus = "active" | "inactive" | "untracked" | ("active" | "inactive" | "untracked")[];
+
 export type Interval =
   | "5m"
   | "10m"
@@ -30,18 +45,3 @@ export type Interval =
   | "weekly"
   | "daily"
   | "hourly";
-
-export type Convert = number | string | number[] | string[];
-export type SortDir = "asc" | "desc";
-
-/**
- * Represents the listing status of a cryptocurrency.
- *
- * The status can be one of the following string values:
- * - `active`: The cryptocurrency is currently active.
- * - `inactive`: The cryptocurrency is currently inactive.
- * - `untracked`: The cryptocurrency is not being tracked.
- *
- * Alternatively, it can be an array of these string values.
- */
-export type ListingStatus = "active" | "inactive" | "untracked" | ("active" | "inactive" | "untracked")[];

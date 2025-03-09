@@ -1,6 +1,9 @@
 import { CoinMarketCapApi } from "@core/api";
 
 export * from "@core/api";
+export * from "@core/client";
+export * from "@core/endpoints";
+export * from "@core/errors";
 
 export * from "@option/cex.option";
 export * from "@option/common.option";
@@ -25,20 +28,6 @@ export * from "@response/dex.response";
 export * from "@response/metric.response";
 export * from "@response/misc.response";
 export * from "@response/status.response";
-
-export * from "@error/cmc-apikey-disabled.error";
-export * from "@error/cmc-apikey-required.error";
-export * from "@error/cmc-invalid.error";
-export * from "@error/cmc-missing.error";
-export * from "@error/cmc-payment-expired.error";
-export * from "@error/cmc-payment-required.error";
-export * from "@error/cmc-plan-unauthorize.error";
-export * from "@error/cmc-rate-limit-daily.error";
-export * from "@error/cmc-rate-limit-ip.error";
-export * from "@error/cmc-rate-limit-minute.error";
-export * from "@error/cmc-rate-limit-monthly.error";
-export * from "@error/cmc-request.error";
-export * from "@error/cmc.error";
 
 export * from "@util/date.util";
 export * from "@util/type.util";

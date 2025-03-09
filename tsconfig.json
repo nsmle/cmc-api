@@ -19,15 +19,11 @@
     "allowJs": false,
     "paths": {
       "@core/*": ["src/core/*"],
-      "@enum/*": ["src/enums/*"],
       "@response/*": ["src/responses/*"],
       "@repository/*": ["src/repositories/*"],
       "@option/*": ["src/types/*"],
       "@type/*": ["src/types/*"],
-      "@error/*": ["src/errors/*"],
-      "@util/*": ["src/utils/*"],
-      "@cmc/*": ["src/*"],
-      "cmc-api": ["src"]
+      "@util/*": ["src/utils/*"]
     },
     "resolveJsonModule": true,
     "noUnusedLocals": true
