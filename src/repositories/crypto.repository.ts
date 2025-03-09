@@ -3,7 +3,7 @@ import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
 import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
-import type { Interval, ListingStatus, Pair } from "@option/common.option";
+import type { Interval, ListingStatus } from "@option/common.option";
 import type {
   AuxiliaryList,
   AuxiliaryListing,
@@ -182,7 +182,7 @@ export class CryptoRepository extends Repository {
   public async metadata<
     TKey extends string = string,
     TValue = CryptoMetadataV2Response & CryptoMetadataV2Response[],
-    TResponse = Pair<TKey, TValue>,
+    TResponse = Record<TKey, TValue>,
   >(
     id: CryptoId,
     aux: AuxiliaryMetadata = ["urls", "logo", "description", "tags", "platform", "date_added", "notice"],
@@ -450,7 +450,7 @@ export class CryptoRepository extends Repository {
    * @template TQuoteKey - The type of the key used for the quote currency. Defaults to `USD`.
    * @template TQuoteValue - The type of the value used for the quote. Defaults to `Quote`.
    * @template TValue - The type of the value returned in the response. Defaults to object or an array of `CryptoQuotesLatestResponse<TQuoteKey, TQuoteValue>`.
-   * @template TResponse - The type of the response returned by the method. Defaults to `Pair<TKey, TValue>`.
+   * @template TResponse - The type of the response returned by the method. Defaults to `Record<TKey, TValue>`.
    *
    * @param {CryptoIdOnly} id - The identifier for the cryptocurrency. Can be an `id`, `slug`, or `symbol`.
    * @param {CryptoConvert} [convert] - The currency to convert the quotes to.
@@ -464,7 +464,7 @@ export class CryptoRepository extends Repository {
     TQuoteKey extends string = "USD",
     TQuoteValue extends object = Quote,
     TValue = CryptoQuotesLatestResponse<TQuoteKey, TQuoteValue> & CryptoQuotesLatestResponse<TQuoteKey, TQuoteValue>[],
-    TResponse = Pair<TKey, TValue>,
+    TResponse = Record<TKey, TValue>,
   >(
     id: CryptoIdOnly,
     convert?: CryptoConvert,
@@ -555,7 +555,7 @@ export class CryptoRepository extends Repository {
     TKey extends string = string,
     TQuoteKey extends string = "USD",
     TQuoteValue extends object = CryptoQuotesHistoricalQuoteValue,
-    TResponse = Pair<TKey, CryptoQuotesHistoricalResponse<TQuoteKey, TQuoteValue>>,
+    TResponse = Record<TKey, CryptoQuotesHistoricalResponse<TQuoteKey, TQuoteValue>>,
   >(
     id: CryptoIdSymbolOnly,
     timeStart?: Date,
@@ -698,7 +698,7 @@ export class CryptoRepository extends Repository {
    * @template TKey - The type of the key used to identify the cryptocurrency.
    * @template TQuoteKey - The type of the key used for the quote currency. Defaults to "USD".
    * @template TQuoteValue - The type of the value used for the quote currency. Defaults to `CryptoOhlcvLatestQuoteValue`.
-   * @template TResponse - The type of the response object. Defaults to `Pair<TKey, CryptoOhlcvLatestResponse<TQuoteKey, TQuoteValue>>`.
+   * @template TResponse - The type of the response object. Defaults to `Record<TKey, CryptoOhlcvLatestResponse<TQuoteKey, TQuoteValue>>`.
    *
    * @param {CryptoIdSymbolOnly} id - One or more cryptocurrency symbols/ids.
    * @param {CryptoConvert} [convert] - One or more cryptocurrency or fiat currency symbols/ids.
@@ -710,7 +710,7 @@ export class CryptoRepository extends Repository {
     TKey extends string = string,
     TQuoteKey extends string = "USD",
     TQuoteValue extends object = CryptoOhlcvLatestQuoteValue,
-    TResponse = Pair<TKey, CryptoOhlcvLatestResponse<TQuoteKey, TQuoteValue>>,
+    TResponse = Record<TKey, CryptoOhlcvLatestResponse<TQuoteKey, TQuoteValue>>,
   >(id: CryptoIdSymbolOnly, convert?: CryptoConvert, skipInvalid: boolean = true): Promise<TResponse> {
     return await this.cmc.client.req<TResponse>(this.endpoints.ohlcv, {
       ...(id?.id && { id: this.cmc.client.commaSeparate(id.id) }),
@@ -773,7 +773,7 @@ export class CryptoRepository extends Repository {
    * @template TKey - The type of the key used to identify the cryptocurrency.
    * @template TQuoteKey - The type of the quote key, defaults to "USD".
    * @template TQuoteValue - The type of the quote value, defaults to `CryptoOhlcvHistoricalQuoteValue`.
-   * @template TResponse - The type of the response, defaults to `Pair<TKey, CryptoOhlcvHistoricalResponse<TQuoteKey, TQuoteValue>>`.
+   * @template TResponse - The type of the response, defaults to `Record<TKey, CryptoOhlcvHistoricalResponse<TQuoteKey, TQuoteValue>>`.
    *
    * @param {CryptoIdOnly} id - The identifier for the cryptocurrency.
    * @param {Date} [timeStart] - The start date for the historical data.
@@ -790,7 +790,7 @@ export class CryptoRepository extends Repository {
     TKey extends string = string,
     TQuoteKey extends string = "USD",
     TQuoteValue extends object = CryptoOhlcvHistoricalQuoteValue,
-    TResponse = Pair<TKey, CryptoOhlcvHistoricalResponse<TQuoteKey, TQuoteValue>>,
+    TResponse = Record<TKey, CryptoOhlcvHistoricalResponse<TQuoteKey, TQuoteValue>>,
   >(
     id: CryptoIdOnly,
     timeStart?: Date,
@@ -861,7 +861,7 @@ export class CryptoRepository extends Repository {
     TKey extends string = string,
     TQuoteKey extends string = "USD",
     TQuoteValue extends object = CryptoPricePerformanceQuoteValue,
-    TResponse = Pair<
+    TResponse = Record<
       TKey,
       CryptoPricePerformanceStatsResponse<TQuoteKey, TQuoteValue> &
         CryptoPricePerformancePeriodResponse<TQuoteKey, TQuoteValue>

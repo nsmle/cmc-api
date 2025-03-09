@@ -1,5 +1,4 @@
-import type { QuoteMap } from "./common.response";
-import type { Pair, Timestamp } from "@option/common.option";
+import type { Timestamp } from "@option/common.option";
 
 /**
  * The response object market quote of the CoinMarketCap Global Metrics API.
@@ -120,7 +119,6 @@ export interface MetricGlobalQuote {
 /**
  * The response object for the CoinMarketCap Global Quotes Metrics API.
  * @see {@link MetricGlobalQuote}
- * @see {@link QuoteMap}
  * @template TQuoteKey The quote currency key.
  * @template TQuoteValue The quote currency value.
  */
@@ -251,7 +249,7 @@ export interface MetricGlobalQuotes<TQuoteKey extends string = "USD", TQuoteValu
    * A map of market quotes in different currency conversions. \
    * *The default map included is `USD`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -312,7 +310,6 @@ export interface MetricGlobalQuoteHistorical {
 /**
  * The response object for the CoinMarketCap Global Quotes Historical Metrics API.
  * @see {@link MetricGlobalQuoteHistorical}
- * @see {@link QuoteMap}
  */
 export interface MetricGlobalQuotesHistorical<
   TQuoteKey extends string = "USD",
@@ -363,7 +360,7 @@ export interface MetricGlobalQuotesHistorical<
    * An object containing market data for this interval by currency option. \
    * *The default currency mapped is `USD`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -626,6 +623,5 @@ export interface MetricBlockchainStats {
  * A map response of blockchain objects by ID, symbol, or slug (as used in query parameters).
  * @template TKey The key type of the blockchain object.
  * @see {@link MetricBlockchainStats}
- * @see {@link Pair}
  */
-export type MetricBlockchainStatsLatestResponse<TKey extends string = string> = Pair<TKey, MetricBlockchainStats>;
+export type MetricBlockchainStatsLatestResponse<TKey extends string = string> = Record<TKey, MetricBlockchainStats>;

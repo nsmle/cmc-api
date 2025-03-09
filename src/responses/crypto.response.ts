@@ -1,6 +1,6 @@
-import type { Interval, Pair, Timestamp, UnixEpoch } from "@option/common.option";
+import type { Interval, Timestamp, UnixEpoch } from "@option/common.option";
 import type { PerformanceStatsTimePeriodOnly } from "@option/crypto.option";
-import type { ContractAddress, Platform, Quote, QuoteMap, Tags, Urls } from "@response/common.response";
+import type { ContractAddress, Platform, Quote, Tags, Urls } from "@response/common.response";
 
 /**
  * Interface representing the response for a list of cryptocurrencies.
@@ -297,7 +297,7 @@ export interface CryptoListingLatestResponse<TQuoteKey extends string = "USD", T
   /**
    * A map of market quotes in different currency conversions. The default map included is `USD`.
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -387,7 +387,7 @@ export interface CryptoListingNewResponse<TQuoteKey extends string = "USD", TQuo
    * A map of market quotes in different currency conversions.
    * The default map included is `USD`.
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -496,7 +496,7 @@ export interface CryptoListingHistoricalResponse<
    * A map of market quotes in different currency conversions.
    * The default map included is `USD`.
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -606,7 +606,7 @@ export interface CryptoQuotesLatestResponse<TQuoteKey extends string = "USD", TQ
    * A map of market quotes in different currency conversions.
    * *The default map included is `USD`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -686,7 +686,7 @@ export interface CryptoQuotesHistoricalResponse<
      * A map of market details for this quote in different currency conversions.
      * *The default map key included is `USD`.*
      */
-    quote: QuoteMap<TQuoteKey, TQuoteValue>;
+    quote: Record<TQuoteKey, TQuoteValue>;
   }[];
 }
 
@@ -853,7 +853,7 @@ export interface CryptoMarketPairResponse<
    * Market Pair quotes object containing key, quote objects for each convert option requested.
    * `USD` and `exchange_reported` are defaults.
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue> & {
+  quote: Record<TQuoteKey, TQuoteValue> & {
     exchange_reported: CryptoMarketPairExchangeReportedQuoteResponse;
   };
 }
@@ -1006,7 +1006,7 @@ export interface CryptoOhlcvLatestResponse<
    * A map of market quotes in different currency conversions.
    * *The default map included is `USD`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -1107,7 +1107,7 @@ export interface CryptoOhlcvHistoricalResponse<
      * A map of market quotes in different currency conversions.
      * *The default map included is `USD`.*
      */
-    quote: QuoteMap<TQuoteKey, TQuoteValue>;
+    quote: Record<TQuoteKey, TQuoteValue>;
   }>;
 }
 
@@ -1206,7 +1206,7 @@ export type CryptoPricePerformancePeriodResponse<
    * An object map of time period quotes for each convert option requested.
    * *The default map included is `USD`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 };
 
 /**
@@ -1247,7 +1247,7 @@ export type CryptoPricePerformanceStatsResponse<
   /**
    * An object map of time periods by period requested.
    */
-  periods: Pair<PerformanceStatsTimePeriodOnly, CryptoPricePerformancePeriodResponse<TQuoteKey, TQuoteValue>>;
+  periods: Record<PerformanceStatsTimePeriodOnly, CryptoPricePerformancePeriodResponse<TQuoteKey, TQuoteValue>>;
 };
 
 /**
@@ -1331,7 +1331,7 @@ export interface CryptoCategoryCoin<TQuoteKey extends string = "USD"> {
    * A map of market quotes in different currency conversions.
    * *The default map key included is `USD`.*
    */
-  quote: QuoteMap<
+  quote: Record<
     TQuoteKey,
     Pick<
       Quote,
@@ -1669,7 +1669,7 @@ export interface CryptoTrendingResponse<TQuoteKey extends string = "USD"> {
    * A map of market quotes in different currency conversions.
    * *The default map included is `USD`.*
    */
-  quote: QuoteMap<
+  quote: Record<
     TQuoteKey,
     Pick<
       Quote,

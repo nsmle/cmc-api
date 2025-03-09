@@ -1,4 +1,4 @@
-import type { Pair, Timestamp } from "@option/common.option";
+import type { Timestamp } from "@option/common.option";
 
 /**
  * An object containing various resource URLs for this cryptocurrency.
@@ -236,14 +236,6 @@ export interface Quote {
    */
   price_quote: number;
 }
-
-/**
- * A market quote in the currency conversion option.
- * @template TKey The key type of quote.
- * @template TValue The value type of quote.
- * @see {@link Quote}
- */
-export type QuoteMap<TKey extends string = string, TValue = Quote> = Pair<TKey, TValue>;
 
 /**
  * Represents a tag with a slug, name, and category.

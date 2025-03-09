@@ -1,5 +1,5 @@
-import type { Pair, Timestamp } from "@option/common.option";
-import type { Quote, QuoteMap } from "@response/common.response";
+import type { Timestamp } from "@option/common.option";
+import type { Quote } from "@response/common.response";
 
 /**
  * Various resource URLs for an exchange.
@@ -78,7 +78,7 @@ export interface CexIdMap {
  * A map of exchange objects by ID or slugs (as used in query parameters).
  * @template TKey - The type of the key used in the map, defaults to string.
  */
-export type CexIdMapResponse<TKey extends string = string> = Pair<TKey, CexIdMap>;
+export type CexIdMapResponse<TKey extends string = string> = Record<TKey, CexIdMap>;
 
 /**
  * Array of exchange object results.
@@ -238,7 +238,7 @@ export interface CexMetadata {
  * @template TKey - The type of the key used in the response. e.g: `"binance" | "1"`, Defaults to `string`.
  * @see {@link CexMetadata}
  */
-export type CexMetadataResponse<TKey extends string = string> = Pair<TKey, CexMetadata>;
+export type CexMetadataResponse<TKey extends string = string> = Record<TKey, CexMetadata>;
 
 /**
  * Represents a platform for a centralized exchange (CEX) asset.
@@ -317,13 +317,12 @@ export interface CexAsset {
  * @template TKey - The type of the key used in the response, defaults to `string`.
  * @see {@link CexAsset}
  */
-export type CexAssetsResponse<TKey extends string = string> = Pair<TKey, CexAsset[]> & CexAsset[];
+export type CexAssetsResponse<TKey extends string = string> = Record<TKey, CexAsset[]> & CexAsset[];
 
 /**
  * Represents the response for CEX (Centralized Exchange) listings.
  * @template TQuoteKey - The key type for the quote, defaults to `"USD"`.
  * @template TQuoteValue - The value type for the quote, defaults to `CexMarketQuote`.
- * @see {@link QuoteMap}
  * @see {@link CexMarketQuote}
  */
 export interface CexListing<TQuoteKey extends string = "USD", TQuoteValue extends object = CexMarketQuote> {
@@ -381,7 +380,7 @@ export interface CexListing<TQuoteKey extends string = "USD", TQuoteValue extend
    * A map of market quotes in different currency conversions. \
    * *The default map included is `"USD"`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -524,9 +523,8 @@ export interface CexMarketPairQuote {
  * @see {@link CexMarketPairBase}
  * @see {@link CexMarketPairQuote}
  * @see {@link CexMarketPairQuoteExchangeReported}
- * @see {@link Pair}
  */
-export interface CexMarketPair<
+export interface Record<
   TQuoteKey extends string = "USD",
   TQuoteValue extends object = CexMarketPairQuote,
   TQuoteExchangeReported extends object = CexMarketPairQuoteExchangeReported,
@@ -571,7 +569,7 @@ export interface CexMarketPair<
    * Market Pair quotes object containing `key->quote` objects for each convert option requested. \
    * *`"USD"` and `"exchange_reported"` are defaults.*
    */
-  quote: Pair<TQuoteKey, TQuoteValue> & {
+  quote: Record<TQuoteKey, TQuoteValue> & {
     /**
      * A default exchange reported quote containing raw exchange reported values.
      */
@@ -615,7 +613,7 @@ export interface CexMarketPairs<TQuoteKey extends string = "USD", TQuoteValue ex
   /**
    * Array of all active market pairs for this exchange.
    */
-  market_pairs: CexMarketPair<TQuoteKey, TQuoteValue>[];
+  market_pairs: Record<TQuoteKey, TQuoteValue>[];
 }
 
 /**
@@ -630,7 +628,7 @@ export type CexMarketPairsResponse<
   TKey extends string = string,
   TQuoteKey extends string = "USD",
   TQuoteValue extends object = CexMarketPairQuote,
-> = Pair<TKey, CexMarketPairs<TQuoteKey, TQuoteValue>>;
+> = Record<TKey, CexMarketPairs<TQuoteKey, TQuoteValue>>;
 
 /**
  * A market quotes value.
@@ -697,7 +695,6 @@ export interface CexQuotesValue {
  *
  * @template TQuoteKey - The type of the quote key, defaults to `"USD"`.
  * @template TQuoteValue - The type of the quote value, defaults to `CexQuotesValue`.
- * @see {@link QuoteMap}
  * @see {@link CexQuotesValue}
  */
 export interface CexQuotes<TQuoteKey extends string = "USD", TQuoteValue extends object = CexQuotesValue> {
@@ -751,7 +748,7 @@ export interface CexQuotes<TQuoteKey extends string = "USD", TQuoteValue extends
    * A map of market quotes in different currency conversions. \
    * *The default map included is `"USD"`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
@@ -761,13 +758,12 @@ export interface CexQuotes<TQuoteKey extends string = "USD", TQuoteValue extends
  * @template TQuoteValue - The type of the quote value, defaults to `CexQuotesValue`.
  * @see {@link CexQuotes}
  * @see {@link CexQuotesValue}
- * @see {@link Pair}
  */
 export type CexQuotesLatestResponse<
   TKey extends string = string,
   TQuoteKey extends string = "USD",
   TQuoteValue extends object = CexQuotesValue,
-> = Pair<TKey, CexQuotes<TQuoteKey, TQuoteValue>>;
+> = Record<TKey, CexQuotes<TQuoteKey, TQuoteValue>>;
 
 /**
  * The market details for the current interval and currency conversion option.
@@ -788,7 +784,6 @@ export interface CexQuotesHistoricalQuote {
  * Represents the historical quotes for a centralized exchange (CEX).
  * @template TQuoteKey - The type of the quote key, defaults to `"USD"`.
  * @template TQuoteValue - The type of the quote value, defaults to `CexQuotesHistoricalQuote`.
- * @see {@link QuoteMap}
  * @see {@link CexQuotesHistoricalQuote}
  */
 export interface CexQuotesHistoricalQuotes<
@@ -809,14 +804,13 @@ export interface CexQuotesHistoricalQuotes<
    * A map of market details for this quote in different currency conversions. \
    * *The default map included is `"USD"`.*
    */
-  quote: QuoteMap<TQuoteKey, TQuoteValue>;
+  quote: Record<TQuoteKey, TQuoteValue>;
 }
 
 /**
  * Represents the historical quotes for a centralized exchange (CEX).
  * @template TQuoteKey - The type of the quote key, defaults to `"USD"`.
  * @template TQuoteValue - The type of the quote value, defaults to `CexQuotesHistoricalQuote`.
- * @see {@link QuoteMap}
  * @see {@link CexQuotesHistoricalQuote}
  * @see {@link CexQuotesHistoricalQuotes}
  */
@@ -852,10 +846,9 @@ export interface CexQuotesHistorical<
  * @template TQuoteValue - The type of the quote value, defaults to `CexQuotesHistoricalQuote`.
  * @see {@link CexQuotesHistorical}
  * @see {@link CexQuotesHistoricalQuote}
- * @see {@link Pair}
  */
 export type CexQuotesHistoricalResponse<
   TKey extends string = string,
   TQuoteKey extends string = "USD",
   TQuoteValue extends object = CexQuotesHistoricalQuote,
-> = Pair<TKey, CexQuotesHistorical<TQuoteKey, TQuoteValue>>;
+> = Record<TKey, CexQuotesHistorical<TQuoteKey, TQuoteValue>>;

@@ -12,7 +12,6 @@ import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
 import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
 import { CmcRequestError } from "@error/cmc-request.error";
 import { Enumerable } from "@util/decorators.util";
-import type { Pair } from "@option/common.option";
 import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@response/status.response";
 
 /**
@@ -93,17 +92,17 @@ export class Client {
    * Send an HTTP GET request to the specified endpoint with optional query parameters and headers.
    *
    * @template TData - The expected type of the response data.
-   * @template TQuery - The type of the query parameters, defaults to `Pair<string, string | number | (string | number)[] | boolean>`.
+   * @template TQuery - The type of the query parameters, defaults to `Record<string, string | number | (string | number)[] | boolean>`.
    * @param {string} endpoint - The API endpoint to send the request to.
    * @param {TQuery} [query] - Optional query parameters to include in the request.
-   * @param {Pair<string, string>} [headers] - Optional headers to include in the request.
+   * @param {Record<string, string>} [headers] - Optional headers to include in the request.
    * @returns {Promise<TData>} - A promise that resolves to the response data of type `TData`.
    * @throws {CmcErrorClass} Will throw an error if the response status indicates an error.
    */
-  public async req<TData = unknown, TQuery = Pair<string, string | number | (string | number)[] | boolean>>(
+  public async req<TData = unknown, TQuery = Record<string, string | number | (string | number)[] | boolean>>(
     endpoint: string,
     query?: TQuery,
-    headers?: Pair<string, string>,
+    headers?: Record<string, string>,
   ): Promise<TData> {
     const uri = this.genUri(endpoint, query);
     const requestInit = { method: "GET", headers: this.genHeaders(headers) };
@@ -179,12 +178,12 @@ export class Client {
   /**
    * Generates a complete URI with query parameters.
    *
-   * @template TQuery - The type of the query parameters, defaults to `Pair<string, string | number | (string | number)[] | boolean>`.
+   * @template TQuery - The type of the query parameters, defaults to `Record<string, string | number | (string | number)[] | boolean>`.
    * @param {string} endpoint - The endpoint to append to the base URL.
    * @param {TQuery} [query] - An optional object containing query parameters as key-value pairs.
    * @returns {URL} - The generated URL with the provided endpoint and query parameters.
    */
-  private genUri<TQuery = Pair<string, string | number | (string | number)[] | boolean>>(
+  private genUri<TQuery = Record<string, string | number | (string | number)[] | boolean>>(
     endpoint: string,
     query?: TQuery,
   ): URL {
@@ -209,10 +208,9 @@ export class Client {
    * @param additionHeaders - An object containing additional headers to be included in the request.
    * @returns A Headers object with the API key and any additional headers appended.
    *
-   * @see {@link Pair}
    * @see {@link Headers}
    */
-  private genHeaders(additionHeaders: Pair<string, string>): Headers {
+  private genHeaders(additionHeaders: Record<string, string>): Headers {
     const headers = new Headers();
     headers.append("X-CMC_PRO_API_KEY", this.apikey);
     if (additionHeaders) for (const key of Object.keys(additionHeaders)) headers.append(key, additionHeaders[key]);
