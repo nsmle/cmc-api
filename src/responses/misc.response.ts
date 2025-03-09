@@ -1,4 +1,4 @@
-import type { Timestamp } from "@option/common.type";
+import type { Timestamp } from "@option/common.option";
 
 /**
  * An rate limit and daily/monthly credit limit details for your API Key.

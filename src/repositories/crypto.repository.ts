@@ -3,7 +3,7 @@ import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
 import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
-import type { Interval, ListingStatus, Pair } from "@option/common.type";
+import type { Interval, ListingStatus, Pair } from "@option/common.option";
 import type {
   AuxiliaryList,
   AuxiliaryListing,

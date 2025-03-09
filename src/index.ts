@@ -3,7 +3,7 @@ import { CoinMarketCapApi } from "@core/api";
 export * from "@core/api";
 
 export * from "@option/cex.option";
-export * from "@option/common.type";
+export * from "@option/common.option";
 export * from "@option/community.option";
 export * from "@option/crypto.option";
 export * from "@option/dex.option";

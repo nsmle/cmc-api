@@ -19,7 +19,7 @@ import type {
   CexMarketPairsFeeType,
   CexMatched,
 } from "@option/cex.option";
-import type { Convert, Interval, ListingStatus, SortDir } from "@option/common.type";
+import type { Convert, Interval, ListingStatus, SortDir } from "@option/common.option";
 import type {
   CexAssetsResponse,
   CexIdMapResponse,

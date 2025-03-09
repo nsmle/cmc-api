@@ -3,7 +3,7 @@ import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
 import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
-import type { Convert, Interval } from "@option/common.type";
+import type { Convert, Interval } from "@option/common.option";
 import type { CryptoIdOnly } from "@option/crypto.option";
 import type { AuxiliaryMetricGlobalQuotesHistoricalList, MetricIndexHistoricalInterval } from "@option/metric.option";
 import type {

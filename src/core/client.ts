@@ -12,7 +12,7 @@ import { CmcMinuteRateLimitError } from "@error/cmc-rate-limit-minute.error";
 import { CmcMonthlyRateLimitError } from "@error/cmc-rate-limit-monthly.error";
 import { CmcRequestError } from "@error/cmc-request.error";
 import { Enumerable } from "@util/decorators.util";
-import type { Pair } from "@option/common.type";
+import type { Pair } from "@option/common.option";
 import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@response/status.response";
 
 /**

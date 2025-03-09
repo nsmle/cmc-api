@@ -3,7 +3,7 @@ import { Repository } from "@core/repository";
 import { dateToUnix } from "@util/date.util";
 import { Enumerable } from "@util/decorators.util";
 import { isNumeric } from "@util/type.util";
-import type { Convert, SortDir } from "@option/common.type";
+import type { Convert, SortDir } from "@option/common.option";
 import type {
   AuxiliaryDexList,
   AuxiliaryDexListing,

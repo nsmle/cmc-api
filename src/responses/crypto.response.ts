@@ -1,4 +1,4 @@
-import type { Interval, Pair, Timestamp, UnixEpoch } from "@option/common.type";
+import type { Interval, Pair, Timestamp, UnixEpoch } from "@option/common.option";
 import type { PerformanceStatsTimePeriodOnly } from "@option/crypto.option";
 import type { ContractAddress, Platform, Quote, QuoteMap, Tags, Urls } from "@response/common.response";
 

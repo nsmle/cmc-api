@@ -1,5 +1,5 @@
 import type { QuoteMap } from "./common.response";
-import type { Pair, Timestamp } from "@option/common.type";
+import type { Pair, Timestamp } from "@option/common.option";
 
 /**
  * The response object market quote of the CoinMarketCap Global Metrics API.

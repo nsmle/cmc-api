@@ -1,4 +1,4 @@
-import type { Iso8601, UnixEpoch } from "@option/common.type";
+import type { Iso8601, UnixEpoch } from "@option/common.option";
 
 export const dateToUnix = (date: Date): UnixEpoch | null => (date ? Math.floor(date.getTime() / 1000) : null);
 export const unixToDate = (unix: UnixEpoch): Date | null => (unix ? new Date(unix * 1000) : null);

@@ -1,4 +1,4 @@
-import type { Pair, Timestamp } from "@option/common.type";
+import type { Pair, Timestamp } from "@option/common.option";
 
 /**
  * An object containing various resource URLs for this cryptocurrency.

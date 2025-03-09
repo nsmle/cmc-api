@@ -1,4 +1,4 @@
-import type { Timestamp } from "@option/common.type";
+import type { Timestamp } from "@option/common.option";
 import type { Urls } from "@response/common.response";
 
 /**

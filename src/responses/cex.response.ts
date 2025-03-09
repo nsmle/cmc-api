@@ -1,4 +1,4 @@
-import type { Pair, Timestamp } from "@option/common.type";
+import type { Pair, Timestamp } from "@option/common.option";
 import type { Quote, QuoteMap } from "@response/common.response";
 
 /**
