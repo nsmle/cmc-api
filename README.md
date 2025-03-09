@@ -621,7 +621,37 @@ for (const trendingToken of trendingTokens) console.log(trendingToken);
 
 
 ### Tools and Others
-**(_soon_)**
+
+#### Api Key Info
+###### get the usage statistics of your API key.
+```typescript
+import type { MiscKeyInfo } from "cmc-api";
+
+const apikeyStats = await cmc.misc.usage<MiscKeyInfo>();
+console.log(apikeyStats.plan);
+console.log(apikeyStats.usage);
+```
+
+#### Fiat
+###### get map of all supported fiat currencies.
+```typescript
+import type { MiscFiat } from "cmc-api";
+
+const fiats = await cmc.misc.fiats<MiscFiat[]>(4000, 1, "id", true);
+for (const fiat of fiats) console.log(fiat.name);
+```
+
+#### Price Conversion
+###### convert an amount of ethereum to fiat currency by id.
+```typescript
+const converted = await cmc.misc.priceConvert<"EUR" | "USD">(1, { id: 1027 }, ["EUR", "USD"]);
+console.log(converted.quote.EUR, converted.quote.USD);
+```
+###### convert an amount of ethereum to fiat currency by symbol.
+```typescript
+const converted = await cmc.misc.priceConvert<"EUR" | "USD">(1, { symbol: "ETH" }, ["EUR", "USD"]);
+console.log(converted.quote.EUR, converted.quote.USD);
+```
 
 
 ## Changelog

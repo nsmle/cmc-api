@@ -32,6 +32,7 @@ import type { CmcBaseResponse, CmcErrorClass, CmcStatusResponse } from "@respons
  *
  * const data = await cmc.client.req('/v1/cryptocurrency/map');
  * console.log(data);
+ * ```
  */
 export class Client {
   /**
