@@ -7,6 +7,7 @@ import type { MiscFiatSort, MiscPriceBase, MiscPriceConvert } from "@option/misc
 import type {
   MiscFiatsResponse,
   MiscKeyInfoResponse,
+  MiscPostmanResponse,
   MiscPriceConversionQuote,
   MiscPriceConversionResponse,
 } from "@response/misc.response";
@@ -184,5 +185,40 @@ export class MiscRepository extends Repository {
       ...(time && { time: dateToUnix(time) }),
       amount: amount,
     });
+  }
+
+  /**
+   * Convert CMC APIs into postman format.
+   *
+   * **Available api plans**: `Basic`, `Hobbyist`, `Startup`, `Standard`, `Professional`, `Enterprise`. \
+   * **CMC equivalent pages**: *No equivalent, this data is only available via API.*
+   *
+   * @see
+   * {@link https://pro.coinmarketcap.com/api/v1#operation/getV1ToolsPostman | CoinMarketCap Postman Collection}. \
+   * {@link MiscPostmanResponse}.
+   *
+   * @example import the CoinMarketCapApi class and create a new instance
+   * ```typescript
+   * import { CoinMarketCapApi } from "cmc-api";
+   * const cmc = new CoinMarketCapApi("YOUR_COINMARKETCAP_APIKEY");
+   * ```
+   *
+   * @example get the postman collection for all CMC APIs.
+   * ```typescript
+   * const postman = await cmc.misc.postman();
+   * for (const item of postman.item) {
+   *   for (const subItem of item.item) {
+   *     for (const subSubItem of subItem.item ?? []) {
+   *       console.log(`${item.name}:${subItem.name} - ${subSubItem.name}`);
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * @template TResponse - The expected response type, defaults to `MiscPostmanResponse`.
+   * @return {Promise<TResponse>} A promise that resolves to the postman collection response.
+   */
+  public async postman<TResponse = MiscPostmanResponse>(): Promise<TResponse> {
+    return await this.cmc.client.req(this.endpoints.postman);
   }
 }

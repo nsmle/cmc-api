@@ -1,14 +1,10 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
-import endpoints from "@core/endpoints";
+import { CoinMarketCapApi } from "@core/api";
+import { endpoints } from "@core/endpoints";
+import type { MiscPostmanItem } from "@response/misc.response";
 
-interface PostmanItem {
-  name?: string;
-  request?: { url?: { path?: string[] } };
-  item?: PostmanItem[];
-}
-
-const getEndpoint = (postmanItems: PostmanItem[], name: string, key: string): string => {
-  function search(items: PostmanItem[]): string {
+const getEndpoint = (postmanItems: MiscPostmanItem[], name: string, key: string): string => {
+  function search(items: MiscPostmanItem[]): string {
     for (const item of items) {
       if (item.name === name && item.request?.url?.path?.includes(key))
         return [""].concat(item.request.url.path ?? [])?.join("/");
@@ -24,12 +20,12 @@ const getEndpoint = (postmanItems: PostmanItem[], name: string, key: string): st
 };
 
 describe("Endpoints", (): void => {
-  let item: unknown[] = [];
+  const API_KEY = process.env.COINMARKETCAP_APIKEY;
+  const cmc = new CoinMarketCapApi(API_KEY);
+  let item: MiscPostmanItem[];
 
   beforeAll(async (): Promise<void> => {
-    const postman = await fetch("https://pro-api.coinmarketcap.com/v1/tools/postman").then(
-      async (res): Promise<{ item: unknown[] }> => (await res.json()) as { item: unknown[] },
-    );
+    const postman = await cmc.misc.postman();
     item = postman.item;
   });
 

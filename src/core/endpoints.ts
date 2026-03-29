@@ -194,6 +194,9 @@ const misc = {
 
   /** The usage statistics of the API key endpoint. */
   usageStats: "/v1/key/info",
+
+  /** The Postman collection of the CoinMarketCap API endpoint. */
+  postman: "/v1/tools/postman",
 };
 
 /**

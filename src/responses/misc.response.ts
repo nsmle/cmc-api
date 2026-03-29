@@ -202,3 +202,320 @@ export type MiscPriceConversionResponse<
   TQuoteKey extends string = string,
   TQuoteValue extends object = MiscPriceConversionQuote,
 > = MiscPriceConversion<TQuoteKey, TQuoteValue>;
+
+/**
+ * Generic key-value pair object used by Postman collection entries.
+ */
+export interface MiscPostmanKeyValue {
+  /**
+   * Entry key.
+   */
+  key: string;
+
+  /**
+   * Entry value.
+   */
+  value: string;
+
+  /**
+   * Optional human-readable explanation.
+   */
+  description?: string;
+
+  /**
+   * Whether this entry is disabled in Postman.
+   */
+  disabled?: boolean;
+}
+
+/**
+ * Text description object used by Postman.
+ */
+export interface MiscPostmanDescription {
+  /**
+   * Description content.
+   */
+  content: string;
+
+  /**
+   * Description mime type.
+   */
+  type: string;
+}
+
+/**
+ * URL object used by Postman requests.
+ * @see {@link MiscPostmanKeyValue}
+ */
+export interface MiscPostmanUrl {
+  /**
+   * URL path segments.
+   */
+  path: string[];
+
+  /**
+   * URL host segments.
+   */
+  host: string[];
+
+  /**
+   * Query parameters.
+   */
+  query?: MiscPostmanKeyValue[];
+
+  /**
+   * URL variables.
+   */
+  variable?: MiscPostmanKeyValue[];
+
+  /**
+   * Raw URL string (optional in some collections).
+   */
+  raw?: string;
+}
+
+/**
+ * Postman script object.
+ */
+export interface MiscPostmanScript {
+  /**
+   * Script lines.
+   */
+  exec: string[];
+
+  /**
+   * Script type, usually text/javascript.
+   */
+  type: string;
+}
+
+/**
+ * Event object attached to item/collection.
+ * @see {@link MiscPostmanScript}
+ */
+export interface MiscPostmanEvent {
+  /**
+   * Event trigger type.
+   */
+  listen: string;
+
+  /**
+   * Executed script.
+   */
+  script: MiscPostmanScript;
+}
+
+/**
+ * Request object in Postman collection.
+ * @see {@link MiscPostmanDescription}
+ * @see {@link MiscPostmanUrl}
+ * @see {@link MiscPostmanKeyValue}
+ */
+export interface MiscPostmanRequest {
+  /**
+   * Request display name.
+   */
+  name: string;
+
+  /**
+   * Request description.
+   */
+  description?: MiscPostmanDescription;
+
+  /**
+   * Request URL.
+   */
+  url: MiscPostmanUrl;
+
+  /**
+   * Request headers.
+   */
+  header?: MiscPostmanKeyValue[];
+
+  /**
+   * HTTP method.
+   */
+  method: string;
+
+  /**
+   * Auth configuration.
+   */
+  auth: null;
+}
+
+/**
+ * Original request snapshot in saved examples.
+ * @see {@link MiscPostmanUrl}
+ * @see {@link MiscPostmanKeyValue}
+ */
+export interface MiscPostmanOriginalRequest {
+  /**
+   * Original request URL.
+   */
+  url: MiscPostmanUrl;
+
+  /**
+   * Original request headers.
+   */
+  header?: MiscPostmanKeyValue[];
+
+  /**
+   * Original request method.
+   */
+  method: string;
+
+  /**
+   * Optional original request body.
+   */
+  body?: Record<string, unknown>;
+}
+
+/**
+ * Saved response example in Postman collection item.
+ * @see {@link MiscPostmanOriginalRequest}
+ * @see {@link MiscPostmanKeyValue}
+ */
+export interface MiscPostmanSavedResponse {
+  /**
+   * Response ID.
+   */
+  id: string;
+
+  /**
+   * Response name.
+   */
+  name: string;
+
+  /**
+   * Original request associated with this example.
+   */
+  originalRequest: MiscPostmanOriginalRequest;
+
+  /**
+   * HTTP status text.
+   */
+  status: string;
+
+  /**
+   * HTTP status code.
+   */
+  code: number;
+
+  /**
+   * Response headers.
+   */
+  header?: MiscPostmanKeyValue[];
+
+  /**
+   * Raw response body.
+   */
+  body: string;
+
+  /**
+   * Cookies list.
+   */
+  cookie?: unknown[];
+
+  /**
+   * Postman preview language.
+   */
+  _postman_previewlanguage?: string;
+}
+
+/**
+ * Folder/request node inside Postman collection.
+ * @see {@link MiscPostmanRequest}
+ * @see {@link MiscPostmanSavedResponse}
+ * @see {@link MiscPostmanEvent}
+ */
+export interface MiscPostmanItem {
+  /**
+   * Item ID.
+   */
+  id: string;
+
+  /**
+   * Item display name.
+   */
+  name: string;
+
+  /**
+   * Child items (folder-like node).
+   */
+  item?: MiscPostmanItem[];
+
+  /**
+   * Request definition (request-like node).
+   */
+  request?: MiscPostmanRequest;
+
+  /**
+   * Saved response examples.
+   */
+  response?: MiscPostmanSavedResponse[];
+
+  /**
+   * Item events.
+   */
+  event?: MiscPostmanEvent[];
+}
+
+/**
+ * Collection metadata object.
+ * @see {@link MiscPostmanDescription}
+ */
+export interface MiscPostmanInfo {
+  /**
+   * Collection display name.
+   */
+  name?: string;
+
+  /**
+   * Collection schema URL.
+   */
+  schema?: string;
+
+  /**
+   * Postman collection UUID.
+   */
+  _postman_id?: string;
+
+  /**
+   * Optional collection description.
+   */
+  description?: string | MiscPostmanDescription;
+}
+
+/**
+ * The response object represents CoinMarketCap Postman collection.
+ * @see {@link MiscPostmanItem}
+ * @see {@link MiscPostmanInfo}
+ * @see {@link MiscPostmanEvent}
+ * @see {@link MiscPostmanKeyValue}
+ */
+export interface MiscPostmanResponse {
+  /**
+   * Collection items.
+   */
+  item: MiscPostmanItem[];
+
+  /**
+   * Optional collection metadata.
+   */
+  info?: MiscPostmanInfo;
+
+  /**
+   * Optional collection-level events.
+   */
+  event?: MiscPostmanEvent[];
+
+  /**
+   * Optional collection variables.
+   */
+  variable?: MiscPostmanKeyValue[];
+
+  /**
+   * Optional collection auth config.
+   */
+  auth?: null;
+}
